@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>図書貸出管理アプリ</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9; }
+        h1 { color: #333; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"] { width: 300px; padding: 8px; }
+        button { padding: 8px 15px; background-color: #28a745; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #218838; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #007bff; color: white; }
+        .status-badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+        .available { background-color: #d4edda; color: #155724; }
+        .borrowed { background-color: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+
+    <h1>📚 図書貸出管理システム</h1>
+
+    <h2>新しく本を登録する</h2>
+    <div class="form-group">
+        <label for="book-title">本のタイトル</label>
+        <input type="text" id="book-title" placeholder="例：リーダブルコード">
+    </div>
+    <div class="form-group">
+        <label for="book-author">著者名</label>
+        <input type="text" id="book-author" placeholder="例：Dustin Boswell">
+    </div>
+    <button onclick="alert('天才のコード：ここに登録処理を実装します！')">本を登録</button>
+
+    <h2>図書一覧</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>タイトル</th>
+                <th>著者</th>
+                <th>ステータス</th>
+                <th>アクション</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>プログラミングを学ぶ前に読む本</td>
+                <td>天才プログラマー</td>
+                <td><span class="status-badge available">貸出可能</span></td>
+                <td><button style="background-color: #007bff;">借りる</button></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>モダンWeb開発入門</td>
+                <td>山田 太郎</td>
+                <td><span class="status-badge borrowed">貸出中</span></td>
+                <td><button style="background-color: #6c757d;">返却する</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>図書貸出管理アプリ</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9; }
+        h1 { color: #333; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"] { width: 300px; padding: 8px; }
+        button { padding: 8px 15px; background-color: #28a745; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #218838; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #007bff; color: white; }
+        .status-badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+        .available { background-color: #d4edda; color: #155724; }
+        .borrowed { background-color: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+
+    <h1>📚 図書貸出管理システム</h1>
+
+    <h2>新しく本を登録する</h2>
+    <div class="form-group">
+        <label for="book-title">本のタイトル</label>
+        <input type="text" id="book-title" placeholder="例：リーダブルコード">
+    </div>
+    <div class="form-group">
+        <label for="book-author">著者名</label>
+        <input type="text" id="book-author" placeholder="例：Dustin Boswell">
+    </div>
+    <button onclick="alert('天才のコード：ここに登録処理を実装します！')">本を登録</button>
+
+<h2>図書一覧（SQLの結果をJavaScriptでシミュレート）</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>タイトル</th>
+                <th>著者</th>
+                <th>ステータス</th>
+            </tr>
+        </thead>
+        <tbody id="book-list">
+            </tbody>
+    </table>
+
+    <script>
+        // 1. 本来は、Python(SQL)からこのようなデータ（JSON形式）が送られてきます
+        // SQLイメージ: SELECT id, title, author, is_borrowed FROM books;
+        const sqlResultMock = [
+            { id: 1, title: "リーダブルコード", author: "Dustin Boswell", is_borrowed: 0 },
+            { id: 2, title: "コードコンプリート", author: "Steve McConnell", is_borrowed: 1 },
+            { id: 3, title: "天才プログラマーの思考法", author: "天才プログラマー", is_borrowed: 0 }
+        ];
+
+        // 2. HTMLの「book-list」という場所を特定する
+        const tbody = document.getElementById('book-list');
+
+        // 3. ループ処理で、データの一行ずつをHTMLのテーブルの行に変形して埋め込む
+        sqlResultMock.forEach(book => {
+            const row = document.createElement('tr');
+
+            // ステータスのバッジを判定
+            const statusClass = book.is_borrowed === 1 ? 'borrowed' : 'available';
+            const statusText = book.is_borrowed === 1 ? '貸出中' : '貸出可能';
+
+            // 行の中身（HTML）を組み立てる
+            row.innerHTML = `
+                <td>${book.id}</td>
+                <td><strong>${book.title}</strong></td>
+                <td>${book.author}</td>
+                <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+            `;
+
+            // 組み立てた行をテーブルに追加する
+            tbody.appendChild(row);
+        });
+    </script>
+</body>
+</html>
