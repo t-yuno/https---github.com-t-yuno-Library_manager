@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>蔵書貸出確認 - 蔵書貸出管理アプリ</title>
+    <style>
+        /* 元の画面の美しい世界観（フォーマット）を完全に継承 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f4f9;
+        }
+        
+        h1 { color: #333; }
+
+        /* 確認画面専用のすっきりとした中央配置コンテナ */
+        .confirm-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #444;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 8px;
+            margin-bottom: 25px;
+        }
+
+        /* 確認項目のレイアウト */
+        .confirm-item {
+            display: flex;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 16px;
+        }
+
+        .confirm-label {
+            width: 140px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .confirm-value {
+            flex: 1;
+            color: #111;
+        }
+
+        .highlight-date {
+            color: #d9534f; /* 期限日は印象的な赤系で強調 */
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* ボタンエリア：左右並び */
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 35px;
+        }
+        
+        button { 
+            padding: 10px 20px; 
+            color: white; 
+            border: none; 
+            cursor: pointer; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            width: 100%; 
+            height: 40px;     
+        }
+        button:hover { opacity: 0.9; }
+
+        /* 確定ボタン */
+        .btn-confirm { background-color: #4496d3; }
+        
+        /* 戻るボタン */
+        .btn-back { background-color: #8a8c8e; }
+    </style>
+</head>
+
+<body>
+
+    <h1>📚 蔵書貸出管理システム 📚</h1>
+
+    <div class="confirm-container">
+        <h2>以下の蔵書を借りますか？</h2>
+
+        <div class="confirm-item">
+            <div class="confirm-label">蔵書番号</div>
+            <div class="confirm-value" id="info-book-number">0000001</div>
+        </div>
+        <div class="confirm-item">
+            <div class="confirm-label">タイトル</div>
+            <div class="confirm-value" id="info-title"><strong>基本情報技術者試験対策</strong></div>
+        </div>
+        <div class="confirm-item">
+            <div class="confirm-label">著者名</div>
+            <div class="confirm-value" id="info-author">田中 太郎</div>
+        </div>
+        <div class="confirm-item">
+            <div class="confirm-label">カテゴリ</div>
+            <div class="confirm-value" id="info-category">資格</div>
+        </div>
+        <div class="confirm-item">
+            <div class="confirm-label">返却期限</div>
+            <div class="confirm-value highlight-date" id="info-due-date">2026/09/04</div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn-back" onclick="goBack()">戻る</button>
+            <button class="btn-confirm" onclick="executeBorrow()">確定する</button>
+        </div>
+    </div>
+
+    <script>
+        // // 画面起動時に動的な処理を行う
+        // window.addEventListener('DOMContentLoaded', () => {
+        //     // 1. 本来は一覧画面から渡されたURLパラメータ（例: ?id=1）を解析して
+        //     // データベースから本の最新情報を取得し、画面にセットします。
+        //     // 今回はたたき台として、返却期限の自動計算ロジックのみを美しく実装しています。
+            
+        //     calculateDueDate();
+        // });
+
+        // // 本日の2週間後を計算して画面に表示する天才ロジック
+        // function calculateDueDate() {
+        //     const now = new Date();
+        //     // 14日後を設定
+        //     now.setDate(now.getDate() + 14);
+            
+        //     const year = now.getFullYear();
+        //     const month = String(now.getMonth() + 1).padStart(2, '0');
+        //     const date = String(now.getDate()).padStart(2, '0');
+            
+        //     document.getElementById('info-due-date').innerText = `${year}/${month}/${date}`;
+        // }
+
+        // // 「戻る」ボタン：前の一覧画面へ戻る
+        // function goBack() {
+        //     // 一覧画面（index.html）へ戻る処理
+        //     window.location.href = 'index.html';
+        // }
+
+        // // 「確定」ボタン：バックエンドに貸出確定を通知する
+        // async function executeBorrow() {
+        //     alert('天才のロジック：データベースのステータスを「貸出中」に更新し、貸出日を設定します！');
+        //     // 処理完了後、一覧画面に戻る
+        //     window.location.href = 'index.html';
+        // }
+    </script>
+</body>
+</html>
