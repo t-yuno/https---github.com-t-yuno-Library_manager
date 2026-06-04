@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>蔵書貸出管理アプリ</title>
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f4f9;
+        }
+        
+        h1 { color: #333; }
+        
+        /* フォームを左右に並べるためのコンテナ */
+        .flex-container {
+            display: flex;
+            gap: 40px; /* 左右の余白 */
+            margin-bottom: 40px;
+        }
+
+        /* 中身の高さに関わらず、ボックス全体の高さを揃える */
+        .form-box {
+            flex: 1; 
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            
+            /* ボックス内を縦並びのFlexboxにし、ボタンを下揃えにする */
+            display: flex;
+            flex-direction: column;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #444;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 8px;
+        }
+        
+        .form-group { margin-bottom: 15px; }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input[type="text"] { width: 100%; padding: 8px; box-sizing: border-box; }
+        
+        /* ボタンの共通スタイル */
+        button { 
+            padding: 10px 20px; 
+            color: white; 
+            border: none; 
+            cursor: pointer; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            width: 100%; 
+            margin-top: auto; /* 上の要素に関わらず、ボタンを一番下に押し下げます */
+            height: 40px;     /* 高さを明示的に統一 */
+        }
+        button:hover { opacity: 0.9; }
+
+        /* 左側：検索は緑 */
+        .btn-register { background-color: #28a745; }
+        /* 右側：返却は青 */
+        .btn-return { background-color: #4496d3; }
+
+        /* テーブルのスタイル */
+        table { 
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #343a40;
+            color: white;
+        }
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .available {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .borrowed {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .not-for-loan {
+            background-color: #fff352;
+            color: #262626;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>📚 蔵書貸出管理システム 📚</h1>
+
+<div class="flex-container">
+        
+        <div class="form-box">
+            <h2>🔎 返却する蔵書の一覧表示</h2>
+            <div class="form-group">
+                <label for="book-title">名前（姓）</label>
+                <input type="text" id="book-title" placeholder="例：山田">
+            </div>
+            <div class="form-group">
+                <label for="book-author">名前（名）</label>
+                <input type="text" id="book-author" placeholder="例：一郎">
+            </div>
+            <button class="btn-register" onclick="registerBook()">検索</button>
+        </div>
+
+        <div class="form-box">
+            <h2>🚪 ホーム画面へ戻る</h2>
+            <p style="color: #666; font-size: 14px; margin-top: 10px;">
+                ホーム画面へ戻ります
+            </p>
+            <button class="btn-return" onclick="returnindex()">ホームへ</button>
+        </div>
+
+    </div>
+
+    <h2>貸出中図書一覧</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>蔵書番号</th>
+                <th>タイトル</th>
+                <th>著者名</th>
+                <th>カテゴリ</th>
+                <th>ステータス</th>
+                <th>貸出日</th>
+                <th>返却期限</th>
+                <th>返却ボタン</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>2</td>
+                <td>0000002</td>
+                <td>モダンWeb開発入門</td>
+                <td>山田 一郎</td>
+                <td>フロントエンド</td>
+                <td><span class="status-badge borrowed">貸出中</span></td>
+                <td>2026/06/04</td>
+                <td>2026/09/04</td>
+                <td><button style="background-color: #8a8c8e;">返却する</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
