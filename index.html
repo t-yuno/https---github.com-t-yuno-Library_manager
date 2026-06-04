@@ -18,48 +18,68 @@
         .status-badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
         .available { background-color: #d4edda; color: #155724; }
         .borrowed { background-color: #f8d7da; color: #721c24; }
+        .not-for-loan { background-color: #ffef6c; color: #262626; }
     </style>
 </head>
 <body>
 
     <h1>📚 図書貸出管理システム</h1>
 
-    <h2>新しく本を登録する</h2>
+    <h2>検索条件</h2>
     <div class="form-group">
-        <label for="book-title">本のタイトル</label>
+        <label for="book-title">タイトル（部分一致）</label>
         <input type="text" id="book-title" placeholder="例：リーダブルコード">
     </div>
     <div class="form-group">
-        <label for="book-author">著者名</label>
-        <input type="text" id="book-author" placeholder="例：Dustin Boswell">
+        <label for="book-author">カテゴリ名</label>
+        <input type="text" id="book-author" placeholder="例：資格">
     </div>
-    <button onclick="alert('天才のコード：ここに登録処理を実装します！')">本を登録</button>
+    <button onclick="alert('条件に応じてDBを検索し、下記の一覧を絞り込みます')">検索</button>
 
     <h2>図書一覧</h2>
     <table>
         <thead>
             <tr>
                 <th>ID</th>
+                <th>蔵書番号</th>
                 <th>タイトル</th>
-                <th>著者</th>
+                <th>著者名</th>
+                <th>カテゴリ</th>
                 <th>ステータス</th>
-                <th>アクション</th>
+                <th>貸出日</th>
+                <th>貸出</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>1</td>
-                <td>プログラミングを学ぶ前に読む本</td>
-                <td>天才プログラマー</td>
+                <td>0000001</td>
+                <td>基本情報技術者試験対策</td>
+                <td>田中 太郎</td>
+                <td>資格</td>
                 <td><span class="status-badge available">貸出可能</span></td>
+                <td>-</td>
                 <td><button style="background-color: #007bff;">借りる</button></td>
             </tr>
             <tr>
                 <td>2</td>
+                <td>0000002</td>
                 <td>モダンWeb開発入門</td>
-                <td>山田 太郎</td>
+                <td>山田 一郎</td>
+                <td>フロントエンド</td>
                 <td><span class="status-badge borrowed">貸出中</span></td>
-                <td><button style="background-color: #6c757d;">返却する</button></td>
+                <td>2026/06/04</td>
+                <td><button style="background-color: #8a8c8e;">借りる</button></td>
+            </tr>
+                        <tr>
+                <td>3</td>
+                <td>0000003</td>
+                <td>AWS認定資格試験テキスト</td>
+                <td>佐藤 二郎</td>
+                <td>資格</td>
+                <td><span class="status-badge not-for-loan">社内閲覧</span></td>
+                <td>-</td>
+                <td><button style="background-color: #8a8c8e;">借りる</button></td>
             </tr>
         </tbody>
     </table>
