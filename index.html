@@ -2,41 +2,142 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>蔵書貸出管理アプリ</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9; }
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f4f9;
+        }
+        
         h1 { color: #333; }
+        
+        /* フォームを左右に並べるためのコンテナ */
+        .flex-container {
+            display: flex;
+            gap: 40px; /* 左右の余白 */
+            margin-bottom: 40px;
+        }
+
+        /* 中身の高さに関わらず、ボックス全体の高さを揃える */
+        .form-box {
+            flex: 1; 
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            
+            /* ボックス内を縦並びのFlexboxにし、ボタンを下揃えにする */
+            display: flex;
+            flex-direction: column;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #444;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 8px;
+        }
+        
         .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input[type="text"] { width: 300px; padding: 8px; }
-        button { padding: 8px 15px; background-color: #28a745; color: white; border: none; cursor: pointer; }
-        button:hover { background-color: #218838; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        th { background-color: #007bff; color: white; }
-        .status-badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
-        .available { background-color: #d4edda; color: #155724; }
-        .borrowed { background-color: #f8d7da; color: #721c24; }
-        .not-for-loan { background-color: #ffef6c; color: #262626; }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input[type="text"] { width: 100%; padding: 8px; box-sizing: border-box; }
+        
+        /* ボタンの共通スタイル */
+        button { 
+            padding: 10px 20px; 
+            color: white; 
+            border: none; 
+            cursor: pointer; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            width: 100%; 
+            margin-top: auto; /* 上の要素に関わらず、ボタンを一番下に押し下げます */
+            height: 40px;     /* 高さを明示的に統一 */
+        }
+        button:hover { opacity: 0.9; }
+
+        /* 左側：検索は緑 */
+        .btn-register { background-color: #28a745; }
+        /* 右側：返却は青 */
+        .btn-return { background-color: #4496d3; }
+
+        /* テーブルのスタイル */
+        table { 
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #343a40;
+            color: white;
+        }
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .available {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .borrowed {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .not-for-loan {
+            background-color: #fff352;
+            color: #262626;
+        }
     </style>
 </head>
+
 <body>
 
     <h1>📚 蔵書貸出管理システム 📚</h1>
 
-    <h2>検索条件</h2>
-    <div class="form-group">
-        <label for="book-title">タイトル（部分一致）</label>
-        <input type="text" id="book-title" placeholder="例：リーダブルコード">
-    </div>
-    <div class="form-group">
-        <label for="book-author">カテゴリ名</label>
-        <input type="text" id="book-author" placeholder="例：資格">
-    </div>
-    <button onclick="alert('条件に応じてDBを検索し、下記の一覧を絞り込みます')">検索</button>
+<div class="flex-container">
+        
+        <div class="form-box">
+            <h2>🔎 蔵書の検索</h2>
+            <div class="form-group">
+                <label for="book-title">タイトル（部分一致）</label>
+                <input type="text" id="book-title" placeholder="例：リーダブルコード">
+            </div>
+            <div class="form-group">
+                <label for="book-author">カテゴリ検索</label>
+                <input type="text" id="book-author" placeholder="例：資格">
+            </div>
+            <button class="btn-register" onclick="registerBook()">検索</button>
+        </div>
 
-    <h2>図書一覧</h2>
+        <div class="form-box">
+            <h2>🔄 蔵書の返却</h2>
+            <p style="color: #666; font-size: 14px; margin-top: 10px;">
+                返却画面へ移動します
+            </p>
+            <button class="btn-return" onclick="returnBook()">返却</button>
+        </div>
+
+    </div>
+
+    <h2>蔵書一覧</h2>
     <table>
         <thead>
             <tr>
@@ -59,7 +160,7 @@
                 <td>資格</td>
                 <td><span class="status-badge available">貸出可能</span></td>
                 <td>-</td>
-                <td><button style="background-color: #007bff;">借りる</button></td>
+                <td><button style="background-color: #4496d3;">借りる</button></td>
             </tr>
             <tr>
                 <td>2</td>
