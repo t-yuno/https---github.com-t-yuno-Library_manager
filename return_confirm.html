@@ -87,27 +87,23 @@
     <h1>📚 蔵書貸出管理システム 📚</h1>
 
     <div class="confirm-container">
-        <h2>以下の蔵書を借りますか？</h2>
+        <h2>以下の蔵書を返却しますか？</h2>
 
         <div class="confirm-item">
             <div class="confirm-label">蔵書番号</div>
-            <div class="confirm-value" id="info-book-number">0000001</div>
+            <div class="confirm-value" id="info-book-number">0000002</div>
         </div>
         <div class="confirm-item">
             <div class="confirm-label">タイトル</div>
-            <div class="confirm-value" id="info-title"><strong>基本情報技術者試験対策</strong></div>
+            <div class="confirm-value" id="info-title"><strong>モダンWeb開発入門</strong></div>
         </div>
         <div class="confirm-item">
             <div class="confirm-label">著者名</div>
-            <div class="confirm-value" id="info-author">田中 太郎</div>
+            <div class="confirm-value" id="info-author">山田 一郎</div>
         </div>
         <div class="confirm-item">
             <div class="confirm-label">カテゴリ</div>
-            <div class="confirm-value" id="info-category">資格</div>
-        </div>
-        <div class="confirm-item">
-            <div class="confirm-label">返却期限</div>
-            <div class="confirm-value highlight-date" id="info-due-date">2026/09/04</div>
+            <div class="confirm-value" id="info-category">フロントエンド</div>
         </div>
 
         <div class="btn-group">
@@ -121,11 +117,11 @@
 
         // 「戻る」ボタン：前の一覧画面へ戻る
         function goBack() {
-            // 一覧画面（index.html）へ戻る処理
-            window.location.href = 'index.html';
+            // 返却画面（へ戻る処理
+            window.location.href = 'return.html';
         }
 
-        // 「確定」ボタン：バックエンドに貸出確定を通知する
+        // 「確定」ボタン
         async function executeBorrow() {
             // 確定画面へ遷移
             window.location.href = 'confirm.html';
