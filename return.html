@@ -162,7 +162,7 @@
                 <td><span class="status-badge borrowed">貸出中</span></td>
                 <td>2026/06/04</td>
                 <td>2026/09/04</td>
-                <td><button style="background-color: #4496d3;"onclick="confirm()">返却する</button></td>
+                <td><button style="background-color: #4496d3;"onclick="return_confirm()">返却する</button></td>
             </tr>
         </tbody>
     </table>
@@ -173,9 +173,9 @@
             window.location.href = 'index.html';
         }
 
-        function confirm() {
-            // 貸出画面へ移動する処理
-            window.location.href = 'confirm.html';
+        function return_confirm() {
+            // 返却確定画面へ移動する処理
+            window.location.href = 'return_confirm';
         }
     </script>
 
