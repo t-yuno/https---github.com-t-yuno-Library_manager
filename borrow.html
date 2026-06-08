@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>蔵書貸出確認 - 蔵書貸出管理アプリ</title>
     <style>
-        /* 元の画面の美しい世界観（フォーマット）を完全に継承 */
         body {
             font-family: Arial, sans-serif;
             margin: 40px;
@@ -13,7 +12,7 @@
         
         h1 { color: #333; }
 
-        /* 確認画面専用のすっきりとした中央配置コンテナ */
+        /* 確認画面専用の中央配置コンテナ */
         .confirm-container {
             max-width: 600px;
             margin: 40px auto;
@@ -51,7 +50,7 @@
         }
 
         .highlight-date {
-            color: #d9534f; /* 期限日は印象的な赤系で強調 */
+            color: #d9534f; /* 期限日赤 */
             font-weight: bold;
             font-size: 18px;
         }
@@ -118,40 +117,19 @@
     </div>
 
     <script>
-        // // 画面起動時に動的な処理を行う
-        // window.addEventListener('DOMContentLoaded', () => {
-        //     // 1. 本来は一覧画面から渡されたURLパラメータ（例: ?id=1）を解析して
-        //     // データベースから本の最新情報を取得し、画面にセットします。
-        //     // 今回はたたき台として、返却期限の自動計算ロジックのみを美しく実装しています。
-            
-        //     calculateDueDate();
-        // });
 
-        // // 本日の2週間後を計算して画面に表示する天才ロジック
-        // function calculateDueDate() {
-        //     const now = new Date();
-        //     // 14日後を設定
-        //     now.setDate(now.getDate() + 14);
-            
-        //     const year = now.getFullYear();
-        //     const month = String(now.getMonth() + 1).padStart(2, '0');
-        //     const date = String(now.getDate()).padStart(2, '0');
-            
-        //     document.getElementById('info-due-date').innerText = `${year}/${month}/${date}`;
-        // }
 
-        // // 「戻る」ボタン：前の一覧画面へ戻る
-        // function goBack() {
-        //     // 一覧画面（index.html）へ戻る処理
-        //     window.location.href = 'index.html';
-        // }
+        // 「戻る」ボタン：前の一覧画面へ戻る
+        function goBack() {
+            // 一覧画面（index.html）へ戻る処理
+            window.location.href = 'index.html';
+        }
 
-        // // 「確定」ボタン：バックエンドに貸出確定を通知する
-        // async function executeBorrow() {
-        //     alert('天才のロジック：データベースのステータスを「貸出中」に更新し、貸出日を設定します！');
-        //     // 処理完了後、一覧画面に戻る
-        //     window.location.href = 'index.html';
-        // }
+        // 「確定」ボタン：バックエンドに貸出確定を通知する
+        async function executeBorrow() {
+            // 確定画面へ遷移
+            window.location.href = 'confirm.html';
+        }
     </script>
 </body>
 </html>
