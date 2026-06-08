@@ -117,7 +117,7 @@
         <div class="form-box">
             <h2>🔎 蔵書の検索</h2>
             <div class="form-group">
-                <label for="book-title">タイトル（部分一致）</label>
+                <label for="book-title">タイトル検索（部分一致）</label>
                 <input type="text" id="book-title" placeholder="例：リーダブルコード">
             </div>
             <div class="form-group">
@@ -162,7 +162,7 @@
                 <td><span class="status-badge available">貸出可能</span></td>
                 <td>-</td>
                 <td>-</td>
-                <td><button style="background-color: #4496d3;">貸出</button></td>
+                <td><button style="background-color: #4496d3;" onclick="borrowBook()">貸出</button></td>
             </tr>
             <tr>
                 <td>2</td>
@@ -173,7 +173,7 @@
                 <td><span class="status-badge borrowed">貸出中</span></td>
                 <td>2026/06/04</td>
                 <td>2026/09/04</td>
-                <td><button style="background-color: #8a8c8e;">貸出</button></td>
+                <td><button  disabled style="background-color: #8a8c8e;">貸出</button></td>
             </tr>
                         <tr>
                 <td>3</td>
@@ -184,10 +184,21 @@
                 <td><span class="status-badge not-for-loan">社内閲覧</span></td>
                 <td>-</td>
                 <td>-</td>
-                <td><button style="background-color: #8a8c8e;">貸出</button></td>
+                <td><button disabled style="background-color: #8a8c8e;">貸出</button></td>
             </tr>
         </tbody>
     </table>
+    <script>
 
+        function returnBook() {
+            // 返却画面へ移動する処理
+            window.location.href = 'return.html';
+        }
+
+        function borrowBook() {
+            // 貸出画面へ移動する処理
+            window.location.href = 'borrow.html';
+        }
+    </script>
 </body>
 </html>
