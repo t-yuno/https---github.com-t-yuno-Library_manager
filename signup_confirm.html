@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>蔵書貸出管理アプリ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f4f9;
+        }
+        
+        h1 { color: #333; }
+
+        /* 確認画面専用の中央配置コンテナ */
+        .confirm-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #444;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 8px;
+            margin-bottom: 25px;
+        }
+
+        /* 確認項目のレイアウト */
+        .confirm-item {
+            display: flex;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 16px;
+        }
+
+        .confirm-label {
+            width: 140px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .confirm-value {
+            flex: 1;
+            color: #111;
+        }
+
+        /* ボタンエリア：左右並び */
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 35px;
+        }
+        
+        button { 
+            padding: 10px 20px; 
+            color: white; 
+            border: none; 
+            cursor: pointer; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            width: 100%; 
+            height: 40px;     
+        }
+        button:hover { opacity: 0.9; }
+
+        /* 確定ボタン */
+        .btn-confirm { background-color: #4496d3; }
+        
+    </style>
+</head>
+
+<body>
+
+    <h1>📚 蔵書貸出管理システム 📚</h1>
+
+    <div class="confirm-container">
+        <h2>ユーザー登録完了しました</h2>
+
+        <div class="confirm-item">
+            <div class="confirm-label">ユーザーID</div>
+            <div class="confirm-value" id="user-number">00000001</div>
+        </div>
+        <div class="confirm-item">
+            <div class="confirm-label">ユーザー名（姓）</div>
+            <div class="confirm-value" id="info-title">山田</div>
+        </div>
+        <div class="confirm-item">
+            <div class="confirm-label">ユーザー名（名）</div>
+            <div class="confirm-value" id="info-author">太郎</div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn-confirm" onclick="goBack()">ログイン画面へ</button>
+        </div>
+    </div>
+
+    <script>
+
+        function goBack() {
+            //ログイン画面へ移動
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>
