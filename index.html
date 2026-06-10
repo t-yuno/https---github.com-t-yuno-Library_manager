@@ -58,15 +58,25 @@
             border-radius: 4px; 
             font-weight: bold; 
             width: 100%; 
-            margin-top: auto; /* 上の要素に関わらず、ボタンを一番下に設置する */
             height: 40px;     /* 高さを明示的に統一 */
         }
         button:hover { opacity: 0.9; }
 
         /* 左側：検索は緑 */
-        .btn-register { background-color: #28a745; }
+        .btn-register {
+                        background-color: #28a745;
+                        margin-top: auto;
+                     }
         /* 右側：返却は青 */
-        .btn-return { background-color: #4496d3; }
+        .btn-return { 
+                        background-color: #4496d3;
+                        margin-top: auto;
+                    }
+
+        .btn-reset { 
+                        margin-top: 15px;
+                        background-color: #8a8c8e; 
+                    }
 
         /* テーブルのスタイル */
         table { 
@@ -125,6 +135,7 @@
                 <input type="text" id="book-author" placeholder="例：資格">
             </div>
             <button class="btn-register" onclick="registerBook()">検索</button>
+            <button class="btn-reset" onclick="searchReset()">検索リセット</button>
         </div>
 
         <div class="form-box">
@@ -198,6 +209,13 @@
         function borrowBook() {
             // 貸出画面へ移動する処理
             window.location.href = 'borrow.html';
+        }
+
+        function searchReset() {
+            // 検索フォームのリセット処理
+            document.getElementById('book-title').value = '';
+            document.getElementById('book-author').value = '';
+
         }
     </script>
 </body>
