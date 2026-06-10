@@ -4,6 +4,43 @@
     <meta charset="UTF-8">
     <title>蔵書貸出管理アプリ</title>
 <style>
+    /* タイトルとユーザー情報を横並びにする */
+        .header-container {
+            display: flex;
+            justify-content: space-between; /* タイトルを左、ユーザー情報を右に引き離す */
+            align-items: center;            /* 上下の高さを中央で綺麗に揃える */
+            border-bottom: 3px solid #333;   /* 下に細い線を入れてヘッダーらしく引き締める */
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        /* 既存のh1の余白をリセットして綺麗に整える */
+        h1 { 
+            color: #333; 
+            margin: 0; 
+        }
+
+        /* ユーザー情報のテキストスタイル */
+        .user-info {
+            font-size: 16px;
+            color: #555;
+            font-weight: bold;
+            background: #e9ecef;       /* 薄いグレーの背景で少しボックスっぽく */
+            padding: 8px 16px;
+            border-radius: 20px;       /* 角を丸くしてモダンに */
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .user-name {
+            color: #4496d3;            /* 名前をあなたのテーマカラー（青）に */
+            margin-right: 5px;
+        }
+
+        .user-id {
+            color: #777;
+            font-size: 14px;
+        }
+
         body {
             font-family: Arial, sans-serif;
             margin: 40px;
@@ -61,6 +98,7 @@
             margin-top: auto; /* 上の要素に関わらず、ボタンを一番下に設置する */
             height: 40px;     /* 高さを明示的に統一 */
         }
+
         button:hover { opacity: 0.9; }
 
         /* 左側：検索は緑 */
@@ -110,22 +148,15 @@
 
 <body>
 
-    <h1>📚 蔵書貸出管理システム 📚</h1>
-
-<div class="flex-container">
-        
-        <div class="form-box">
-            <h2>🔎 返却する蔵書の一覧表示</h2>
-            <div class="form-group">
-                <label for="book-title">名前（姓）</label>
-                <input type="text" id="book-title" placeholder="例：山田">
-            </div>
-            <div class="form-group">
-                <label for="book-author">名前（名）</label>
-                <input type="text" id="book-author" placeholder="例：一郎">
-            </div>
-            <button class="btn-register" onclick="registerBook()">検索</button>
+    <div class="header-container">
+        <h1>📚 蔵書貸出管理システム 📚</h1>
+        <div class="user-info">
+            ログイン中: <span class="user-name">山田 太郎</span> 
+            <span class="user-id">(ID: U001)</span>
         </div>
+    </div>
+
+    <div class="flex-container">
 
         <div class="form-box">
             <h2>🚪 ホーム画面へ戻る</h2>
@@ -135,6 +166,7 @@
             <button class="btn-return" onclick="returnindex()">ホームへ</button>
         </div>
 
+        <div style="flex: 1;"></div>
     </div>
 
     <h2>貸出中図書一覧</h2>
