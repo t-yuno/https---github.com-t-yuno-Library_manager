@@ -4,6 +4,43 @@
     <meta charset="UTF-8">
     <title>蔵書貸出管理アプリ</title>
 <style>
+
+    /* タイトルとユーザー情報を横並びにする */
+        .header-container {
+            display: flex;
+            justify-content: space-between; /* タイトルを左、ユーザー情報を右に引き離す */
+            align-items: center;            /* 上下の高さを中央で綺麗に揃える */
+            border-bottom: 3px solid #333;   /* 下に細い線を入れてヘッダーらしく引き締める */
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        /* 既存のh1の余白をリセットして綺麗に整える */
+        h1 { 
+            color: #333; 
+            margin: 0; 
+        }
+
+        /* ユーザー情報のテキストスタイル */
+        .user-info {
+            font-size: 16px;
+            color: #555;
+            font-weight: bold;
+            background: #e9ecef;       /* 薄いグレーの背景で少しボックスっぽく */
+            padding: 8px 16px;
+            border-radius: 20px;       /* 角を丸くしてモダンに */
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .user-name {
+            color: #4496d3;            /* 名前をあなたのテーマカラー（青）に */
+            margin-right: 5px;
+        }
+
+        .user-id {
+            color: #777;
+            font-size: 14px;
+        }
         body {
             font-family: Arial, sans-serif;
             margin: 40px;
@@ -120,7 +157,14 @@
 
 <body>
 
-    <h1>📚 蔵書貸出管理システム 📚</h1>
+<div class="header-container">
+        <h1>📚 蔵書貸出管理システム 📚</h1>
+        
+            <div class="user-info">
+            ログイン中: <span class="user-name">山田 太郎</span> 
+            <span class="user-id">(ID: U001)</span>
+        </div>
+</div>
 
 <div class="flex-container">
         
