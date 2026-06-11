@@ -1,266 +1,287 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>蔵書貸出管理アプリ</title>
-<style>
+    <head>
+        <meta charset="UTF-8">
+        <title>蔵書貸出管理アプリ</title>
 
-    /* タイトルとユーザー情報を横並びにする */
-        .header-container {
-            display: flex;
-            justify-content: space-between; /* タイトルを左、ユーザー情報を右に引き離す */
-            align-items: center;            /* 上下の高さを中央で綺麗に揃える */
-            border-bottom: 3px solid #333;   /* 下に細い線を入れてヘッダーらしく引き締める */
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
+        <style>
 
-        /* 既存のh1の余白をリセットして綺麗に整える */
-        h1 { 
-            color: #333; 
-            margin: 0; 
-        }
+            /* タイトルとユーザー情報を横並びにする */
+            .header-container {
+                display: flex;
+                justify-content: space-between; /* タイトルを左、ユーザー情報を右に引き離す */
+                align-items: center;            /* 上下の高さを中央で綺麗に揃える */
+                border-bottom: 3px solid #333;   /* 下に細い線を入れてヘッダーらしく引き締める */
+                padding-bottom: 10px;
+                margin-bottom: 30px;
+            }
 
-        /* ユーザー情報のテキストスタイル */
-        .user-info {
-            font-size: 16px;
-            color: #555;
-            font-weight: bold;
-            background: #e9ecef;       /* 薄いグレーの背景で少しボックスっぽく */
-            padding: 8px 16px;
-            border-radius: 20px;       /* 角を丸くしてモダンに */
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
+            h1 { 
+                color: #333; 
+                margin: 0; 
+            }
 
-        .user-name {
-            color: #4496d3;            /* 名前をあなたのテーマカラー（青）に */
-            margin-right: 5px;
-        }
-
-        .user-id {
-            color: #777;
-            font-size: 14px;
-        }
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f4f4f9;
-        }
-        
-        h1 { color: #333; }
-        
-        /* フォームを左右に並べるためのコンテナ */
-        .flex-container {
-            display: flex;
-            gap: 40px; /* 左右の余白 */
-            margin-bottom: 40px;
-        }
-
-        /* 中身の高さに関わらず、ボックス全体の高さを揃える */
-        .form-box {
-            flex: 1; 
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            /* ユーザー情報のテキストスタイル */
+            .user-info {
+                font-size: 16px;
+                color: #555;
+                font-weight: bold;
+                background: #e9ecef;       /* 薄いグレーの背景で少しボックスっぽく */
+                padding: 8px 16px;
+                border-radius: 20px;       /* 角を丸くしてモダンに */
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            }
             
-            /* ボックス内を縦並びのFlexboxにし、ボタンを下揃えにする */
-            display: flex;
-            flex-direction: column;
-        }
+            .user-name {
+                color: #4496d3;
+                margin-right: 5px;
+            }
 
-        h2 {
-            margin-top: 0;
-            color: #444;
-            border-bottom: 2px solid #ddd;
-            padding-bottom: 8px;
-        }
-        
-        .form-group { margin-bottom: 15px; }
-        
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        
-        input[type="text"] { width: 100%; padding: 8px; box-sizing: border-box; }
-        
-        /* ボタンの共通スタイル */
-        button { 
-            padding: 10px 20px; 
-            color: white; 
-            border: none; 
-            cursor: pointer; 
-            border-radius: 4px; 
-            font-weight: bold; 
-            width: 100%; 
-            height: 40px;     /* 高さを明示的に統一 */
-        }
-        button:hover { opacity: 0.9; }
+            .user-id {
+                color: #777;
+                font-size: 14px;
+            }
 
-        /* 左側：検索は緑 */
-        .btn-register {
-                        background-color: #28a745;
-                        margin-top: auto;
-                     }
-        /* 右側：返却は青 */
-        .btn-return { 
-                        background-color: #4496d3;
-                        margin-top: auto;
-                    }
+            /* タイトルとユーザー情報を横並びにする_終わり */
 
-        .btn-reset { 
-                        margin-top: 15px;
-                        background-color: #8a8c8e; 
-                    }
-
-        /* テーブルのスタイル */
-        table { 
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
+            body {
+                font-family: Arial, sans-serif;
+                margin: 40px;
+                background-color: #f4f4f9;
+            }
         
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-        th {
-            background-color: #343a40;
-            color: white;
-        }
-        .status-badge {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        .available {
-            background-color: #d4edda;
-            color: #155724;
-        }
-        .borrowed {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-        .not-for-loan {
-            background-color: #fff352;
-            color: #262626;
-        }
-    </style>
-</head>
+            /* フォームを左右に並べるためのコンテナ */
+            .flex-container {
+                display: flex;
+                gap: 40px; /* 左右の余白 */
+                margin-bottom: 40px;
+            }
 
-<body>
+            /* 中身の高さに関わらず、ボックス全体の高さを揃える */
+            .form-box {
+                flex: 1; 
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                
+                /* ボックス内を縦並びのFlexboxにし、ボタンを下揃えにする */
+                display: flex;
+                flex-direction: column;
+            }
 
-<div class="header-container">
-        <h1>📚 蔵書貸出管理システム 📚</h1>
+            h2 {
+                margin-top: 0;
+                color: #444;
+                border-bottom: 2px solid #ddd;
+                padding-bottom: 8px;
+            }
         
-            <div class="user-info">
-            ログイン中: <span class="user-name">山田 太郎</span> 
-            <span class="user-id">(ID: U001)</span>
+            .form-group { margin-bottom: 15px; }
+        
+            label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+        
+            input[type="text"] { width: 100%; padding: 8px; box-sizing: border-box; }
+        
+            /* ボタンの共通スタイル */
+            button { 
+                padding: 10px 20px; 
+                color: white; 
+                border: none; 
+                cursor: pointer; 
+                border-radius: 4px; 
+                font-weight: bold; 
+                width: 100%; 
+                height: 40px;     /* 高さを明示的に統一 */
+            }
+
+            /* カーソルを合わせるとハイライトが付くやつ */
+            button:hover { opacity: 0.9; }
+
+            /* 左側：検索は緑 */
+            .btn-register {
+                background-color: #28a745;
+                margin-top: auto;
+            }
+
+            /* 左側：検索リセットはグレー */
+            .btn-reset { 
+                margin-top: 15px;
+                background-color: #8a8c8e; 
+            }
+        
+            /* 右側：返却は青 */
+            .btn-return { 
+                background-color: #4496d3;
+                margin-top: auto;
+            }
+
+            /* テーブルのスタイル */
+            table { 
+                width: 100%;
+                border-collapse: collapse;
+                background: white;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
+            
+            th, td {
+                border: 1px solid #ddd;
+                padding: 12px;
+                text-align: left;
+            }
+            th {
+                background-color: #343a40;
+                color: white;
+            }
+            .status-badge {
+                padding: 4px 8px;
+                border-radius: 4px;
+                font-size: 12px;
+                font-weight: bold;
+            }
+            .available {
+                background-color: #d4edda;
+                color: #155724;
+            }
+            .borrowed {
+                background-color: #f8d7da;
+                color: #721c24;
+            }
+            .not-for-loan {
+                background-color: #fff352;
+                color: #262626;
+            }
+        </style>
+
+    </head>
+
+    <body>
+
+        <!-- ヘッダー -->
+        <div class="header-container">
+                <h1>📚 蔵書貸出管理システム 📚</h1>
+                
+                    <div class="user-info">
+                    ログイン中: <span class="user-name">山田 太郎</span> 
+                    <span class="user-id">(ID: U001)</span>
+                </div>
         </div>
-</div>
 
-<div class="flex-container">
+        <div class="flex-container">
         
-        <div class="form-box">
-            <h2>🔎 蔵書の検索</h2>
-            <div class="form-group">
-                <label for="book-title">タイトル検索（部分一致）</label>
-                <input type="text" id="book-title" placeholder="例：リーダブルコード">
+            <div class="form-box">
+                <h2>🔎 蔵書の検索</h2>
+            
+                <div class="form-group">
+                    <label for="book-title">タイトル検索（部分一致）</label>
+                    <input type="text" id="book-title" placeholder="例：リーダブルコード">
+                </div>
+
+                <div class="form-group">
+                    <label for="book-author">カテゴリ検索</label>
+                    <input type="text" id="book-author" placeholder="例：資格">
+                </div>
+
+                <button class="btn-register" onclick="registerBook()">検索</button>
+                <button class="btn-reset" onclick="searchReset()">検索リセット</button>
             </div>
-            <div class="form-group">
-                <label for="book-author">カテゴリ検索</label>
-                <input type="text" id="book-author" placeholder="例：資格">
+
+            <div class="form-box">
+
+                <h2>🔄 蔵書の返却</h2>
+
+                <p style="color: #666; font-size: 14px; margin-top: 10px;">
+                    返却画面へ移動します
+                </p>
+
+                <button class="btn-return" onclick="returnBook()">返却</button>
+
             </div>
-            <button class="btn-register" onclick="registerBook()">検索</button>
-            <button class="btn-reset" onclick="searchReset()">検索リセット</button>
+
         </div>
 
-        <div class="form-box">
-            <h2>🔄 蔵書の返却</h2>
-            <p style="color: #666; font-size: 14px; margin-top: 10px;">
-                返却画面へ移動します
-            </p>
-            <button class="btn-return" onclick="returnBook()">返却</button>
-        </div>
+        <h2>蔵書一覧</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>蔵書番号</th>
+                    <th>タイトル</th>
+                    <th>著者名</th>
+                    <th>カテゴリ</th>
+                    <th>ステータス</th>
+                    <th>貸出日</th>
+                    <th>返却期限</th>
+                    <th>貸出ボタン</th>
+                </tr>
+            </thead>
 
-    </div>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>0000001</td>
+                    <td>基本情報技術者試験対策</td>
+                    <td>田中 太郎</td>
+                    <td>資格</td>
+                    <td><span class="status-badge available">貸出可能</span></td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td><button style="background-color: #4496d3;" onclick="borrowBook()">貸出</button></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>0000002</td>
+                    <td>モダンWeb開発入門</td>
+                    <td>山田 一郎</td>
+                    <td>フロントエンド</td>
+                    <td><span class="status-badge borrowed">貸出中</span></td>
+                    <td>2026/06/04</td>
+                    <td>2026/09/04</td>
+                    <td><button  disabled style="background-color: #8a8c8e;">貸出</button></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>0000003</td>
+                    <td>AWS認定資格試験テキスト</td>
+                    <td>佐藤 二郎</td>
+                    <td>資格</td>
+                    <td><span class="status-badge not-for-loan">社内閲覧</span></td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td><button disabled style="background-color: #8a8c8e;">貸出</button></td>
+                </tr>
+            </tbody>
 
-    <h2>蔵書一覧</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>蔵書番号</th>
-                <th>タイトル</th>
-                <th>著者名</th>
-                <th>カテゴリ</th>
-                <th>ステータス</th>
-                <th>貸出日</th>
-                <th>返却期限</th>
-                <th>貸出ボタン</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>0000001</td>
-                <td>基本情報技術者試験対策</td>
-                <td>田中 太郎</td>
-                <td>資格</td>
-                <td><span class="status-badge available">貸出可能</span></td>
-                <td>-</td>
-                <td>-</td>
-                <td><button style="background-color: #4496d3;" onclick="borrowBook()">貸出</button></td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>0000002</td>
-                <td>モダンWeb開発入門</td>
-                <td>山田 一郎</td>
-                <td>フロントエンド</td>
-                <td><span class="status-badge borrowed">貸出中</span></td>
-                <td>2026/06/04</td>
-                <td>2026/09/04</td>
-                <td><button  disabled style="background-color: #8a8c8e;">貸出</button></td>
-            </tr>
-                        <tr>
-                <td>3</td>
-                <td>0000003</td>
-                <td>AWS認定資格試験テキスト</td>
-                <td>佐藤 二郎</td>
-                <td>資格</td>
-                <td><span class="status-badge not-for-loan">社内閲覧</span></td>
-                <td>-</td>
-                <td>-</td>
-                <td><button disabled style="background-color: #8a8c8e;">貸出</button></td>
-            </tr>
-        </tbody>
-    </table>
-    <script>
+        </table>
 
-        function returnBook() {
-            // 返却画面へ移動する処理
-            window.location.href = 'return.html';
-        }
+        <script>
 
-        function borrowBook() {
-            // 貸出画面へ移動する処理
-            window.location.href = 'borrow.html';
-        }
+            function returnBook() {
+                // 返却画面へ移動する処理
+                window.location.href = 'return.html';
+            }
 
-        function searchReset() {
-            // 検索フォームのリセット処理
-            document.getElementById('book-title').value = '';
-            document.getElementById('book-author').value = '';
+            function borrowBook() {
+                // 貸出画面へ移動する処理
+                window.location.href = 'borrow.html';
+            }
 
-        }
-    </script>
-</body>
+            function searchReset() {
+                // 検索フォームのリセット処理
+                document.getElementById('book-title').value = '';
+                document.getElementById('book-author').value = '';
+
+            }
+            
+        </script>
+
+    </body>
+
 </html>

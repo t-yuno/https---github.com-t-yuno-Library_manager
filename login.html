@@ -1,171 +1,179 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>蔵書貸出管理アプリ</title>
-<style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f4f4f9;
-        }
-        
-        h1 { color: #333; }
-        
-        /* フォームのコンテナ */
-        .confirm-container {
-            max-width: 600px;
-            margin: 40px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
 
-        /* 中身の高さに関わらず、ボックス全体の高さを揃える */
-        .form-box {
-            flex: 1; 
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    <head>
+        
+        <meta charset="UTF-8">
+        <title>蔵書貸出管理アプリ</title>
+        
+        <style>
+
+            /* ヘッダーのスタイル */
+            .header-container {
+                display: flex;
+                justify-content: space-between; /* タイトルを左、ユーザー情報を右に引き離す */
+                align-items: center;            /* 上下の高さを中央で綺麗に揃える */
+                border-bottom: 3px solid #333;   /* 下に細い線を入れてヘッダーらしく引き締める */
+                padding-bottom: 10px;
+                margin-bottom: 30px;
+            }
+
+            body {
+                font-family: Arial, sans-serif;
+                margin: 40px;
+                background-color: #f4f4f9;
+            }
+                
+            h1 { color: #333; }
+                
+            /* フォームのコンテナ */
+            .confirm-container {
+                max-width: 600px;
+                margin: 40px auto;
+                background: white;
+                padding: 30px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
+
+            /* 中身の高さに関わらず、ボックス全体の高さを揃える */
+            .form-box {
+                flex: 1; 
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                
+                /* ボックス内を縦並びのFlexboxにし、ボタンを下揃えにする */
+                display: flex;
+                flex-direction: column;
+            }
+
+            h2 {
+                margin-top: 0;
+                color: #444;
+                border-bottom: 2px solid #ddd;
+                padding-bottom: 8px;
+            }
+                
+            .form-group { margin-bottom: 15px; }
+                
+            label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+                
+            /* 入力フィールドのスタイル */
+            input[type="text"] { width: 100%; padding: 8px; box-sizing: border-box; }
+            input[type="password"] { width: 100%; padding: 8px; box-sizing: border-box; }
+                
+            /* ボタンの共通スタイル */
+            button { 
+                padding: 10px 20px; 
+                color: white; 
+                border: none; 
+                cursor: pointer; 
+                border-radius: 4px; 
+                font-weight: bold; 
+                width: 100%; 
+                margin-top: auto; /* 上の要素に関わらず、ボタンを一番下に設置する */
+                height: 40px;     /* 高さを明示的に統一 */
+            }
             
-            /* ボックス内を縦並びのFlexboxにし、ボタンを下揃えにする */
-            display: flex;
-            flex-direction: column;
-        }
+            /* ボタンの上にカーソルを合わせるとハイライトになるやつ */
+            button:hover { opacity: 0.9; }
+            
+            /* ログインボタンの色 */
+            .btn-login { background-color: #28a745; }
 
-        h2 {
-            margin-top: 0;
-            color: #444;
-            border-bottom: 2px solid #ddd;
-            padding-bottom: 8px;
-        }
+            /* 新規登録の設定 */
+            .signup-text {
+                text-align: center;
+                margin-top: 25px;
+                font-size: 14px; 
+                color: #555
+            }
+
+            span{
+                color: #4496d3; 
+                cursor: pointer; 
+                font-weight: bold; 
+                text-decoration: underline; 
+                margin-left: 5px;
+            }
+
+        </style>
+
+    </head>
+
+    <body>
         
-        .form-group { margin-bottom: 15px; }
+        <div class="header-container">
+            
+            <h1>📚 蔵書貸出管理システム 📚</h1>
+            
+        </div>
         
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        
-        /* 入力フィールドのスタイル */
-        input[type="text"] { width: 100%; padding: 8px; box-sizing: border-box; }
-        input[type="password"] { width: 100%; padding: 8px; box-sizing: border-box; }
-        
-        /* ボタンの共通スタイル */
-        button { 
-            padding: 10px 20px; 
-            color: white; 
-            border: none; 
-            cursor: pointer; 
-            border-radius: 4px; 
-            font-weight: bold; 
-            width: 100%; 
-            margin-top: auto; /* 上の要素に関わらず、ボタンを一番下に設置する */
-            height: 40px;     /* 高さを明示的に統一 */
-        }
-        button:hover { opacity: 0.9; }
-
-        /* 左側：緑 */
-        .btn-register { background-color: #28a745; }
-        /* 右側：青 */
-        .btn-return { background-color: #4496d3; }
-
-        /* テーブルのスタイル */
-        table { 
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-        th {
-            background-color: #343a40;
-            color: white;
-        }
-        .status-badge {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        /* 状態ごとのバッジスタイル */
-        .available {
-            background-color: #d4edda;
-            color: #155724;
-        }
-        .borrowed {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-        .not-for-loan {
-            background-color: #fff352;
-            color: #262626;
-        }
-    </style>
-</head>
-
-<body>
-
-    <h1>📚 蔵書貸出管理システム 📚</h1>
-
-    <div class="confirm-container">
-        <!-- <div class="form-box"> -->
+        <div class="confirm-container">
+            
             <h2>🔓 ログイン</h2>
+
             <div class="form-group">
+                
                 <label for="confirm-label">ユーザー名(姓)</label>
                 <input type="text" id="last-name" placeholder="山田">
+
             </div>
+
             <div class="form-group">
+
                 <label for="confirm-label">ユーザー名(名)</label>
                 <input type="text" id="first-name" placeholder="太郎">
+
             </div>
+            
             <div class="form-group">
+
                 <label for="password">パスワード</label>
                 <input type="password" id="password" placeholder="••••••••">
+
             </div>
-            <button class="btn-register" onclick="login()">ログイン</button>
-        <!-- </div> -->
-    </div> <div style="text-align: center; margin-top: 25px; font-size: 14px; color: #555;">
-        ユーザー登録していない方は 
-        <span style="color: #4496d3; cursor: pointer; font-weight: bold; text-decoration: underline; margin-left: 5px;" 
-              onclick="registerAccount()">
-            新規登録
-        </span>
-    </div>
+            
+            <button class="btn-login" onclick="login()">ログイン</button>
 
-    <script>
+        </div> 
 
-        function login() {
-            // // ログイン処理
-            // const username = document.getElementById('book-title').value;
-            // const password = document.getElementById('book-author').value;
+        <div class="signup-text">
+            ユーザー登録していない方は 
+            <span onclick="registerAccount()">新規登録</span>
+        </div>
 
-            // // 簡単な認証ロジック（実際のアプリケーションではデータベースを使用）
-            // if (username === 'admin' && password === 'password') {
-            //     window.location.href = 'index.html';
-            // } else {
-            //     alert('ユーザー名またはパスワードが間違っています。');
-            // }
+        <script>
 
-            // ホーム画面へ移動する処理
-            window.location.href = 'index.html';
-        }
+            function login() {
+                // // ログイン処理
+                // const username = document.getElementById('book-title').value;
+                // const password = document.getElementById('book-author').value;
 
-        function registerAccount() {
-            // 登録画面へ移動する処理
-            window.location.href = 'signup.html';
-        }
-    </script>
-</body>
+                // // 簡単な認証ロジック（実際のアプリケーションではデータベースを使用）
+                // if (username === 'admin' && password === 'password') {
+                //     window.location.href = 'index.html';
+                // } else {
+                //     alert('ユーザー名またはパスワードが間違っています。');
+                // }
+
+                // ホーム画面へ移動する処理
+                window.location.href = 'index.html';
+            }
+
+            function registerAccount() {
+                // 登録画面へ移動する処理
+                window.location.href = 'signup.html';
+            }
+
+        </script>
+
+    </body>
+
 </html>
