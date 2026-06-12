@@ -1,106 +1,154 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>蔵書貸出管理アプリ</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f4f4f9;
-        }
-        
-        h1 { color: #333; }
+    <head>
+        <meta charset="UTF-8">
+        <title>蔵書貸出管理アプリ</title>
+        <style>
 
-        /* 中央配置コンテナ */
-        .confirm-container {
-            max-width: 600px;
-            margin: 40px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
+            /* タイトルとユーザー情報を横並びにする */
+            .header-container {
+                display: flex;
+                justify-content: space-between; /* タイトルを左、ユーザー情報を右に引き離す */
+                align-items: center;            /* 上下の高さを中央で綺麗に揃える */
+                border-bottom: 3px solid #333;   /* 下に細い線を入れてヘッダーらしく引き締める */
+                padding-bottom: 10px;
+                margin-bottom: 30px;
+            }
 
-        h2 {
-            margin-top: 0;
-            color: #444;
-            border-bottom: 2px solid #ddd;
-            padding-bottom: 8px;
-            margin-bottom: 25px;
-        }
+            h1 { 
+                color: #333; 
+                margin: 0; 
+            }
 
-        /* 確認項目のレイアウト */
-        .confirm-item {
-            display: flex;
-            padding: 12px 0;
-            border-bottom: 1px solid #eee;
-            font-size: 16px;
-        }
+            /* ユーザー情報のテキストスタイル */
+            .user-info {
+                font-size: 16px;
+                color: #555;
+                font-weight: bold;
+                background: #e9ecef;       /* 薄いグレーの背景で少しボックスっぽく */
+                padding: 8px 16px;
+                border-radius: 20px;       /* 角を丸くしてモダンに */
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            }
+            
+            .user-name {
+                color: #4496d3;
+                margin-right: 5px;
+            }
 
-        .confirm-label {
-            width: 140px;
-            font-weight: bold;
-            color: #555;
-        }
+            .user-id {
+                color: #777;
+                font-size: 14px;
+            }
 
-        .confirm-value {
-            flex: 1;
-            color: #111;
-        }
+            /* タイトルとユーザー情報を横並びにする_終わり */
+            
+            body {
+                font-family: Arial, sans-serif;
+                margin: 40px;
+                background-color: #f4f4f9;
+            }
+            
+            h1 { color: #333; }
 
-        .highlight-date {
-            color: #d9534f; /* 期限日は印象的な赤系で強調 */
-            font-weight: bold;
-            font-size: 18px;
-        }
+            /* 中央配置コンテナ */
+            .confirm-container {
+                max-width: 600px;
+                margin: 40px auto;
+                background: white;
+                padding: 30px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
 
-        /* ボタンエリア：左右並び */
-        .btn-group {
-            display: flex;
-            gap: 20px;
-            margin-top: 35px;
-        }
-        
-        button { 
-            padding: 10px 20px; 
-            color: white; 
-            border: none; 
-            cursor: pointer; 
-            border-radius: 4px; 
-            font-weight: bold; 
-            width: 100%; 
-            height: 40px;     
-        }
-        button:hover { opacity: 0.9; }
+            h2 {
+                margin-top: 0;
+                color: #444;
+                border-bottom: 2px solid #ddd;
+                padding-bottom: 8px;
+                margin-bottom: 25px;
+            }
 
-        /* ホームボタン */
-        .btn-home { background-color: #4496d3; }
-    </style>
-</head>
+            /* 確認項目のレイアウト */
+            .confirm-item {
+                display: flex;
+                padding: 12px 0;
+                border-bottom: 1px solid #eee;
+                font-size: 16px;
+            }
 
-<body>
+            .confirm-label {
+                width: 140px;
+                font-weight: bold;
+                color: #555;
+            }
 
-    <h1>📚 蔵書貸出管理システム 📚</h1>
+            .confirm-value {
+                flex: 1;
+                color: #111;
+            }
 
-    <div class="confirm-container">
-        <h2>操作が確定しました！</h2>
+            .highlight-date {
+                color: #d9534f; /* 期限日は印象的な赤系で強調 */
+                font-weight: bold;
+                font-size: 18px;
+            }
 
-        <div class="confirm-item">
-            <div class="confirm-value" id="explanation">あなたの操作は正常に完了しました</div>
+            /* ボタンエリア：左右並び */
+            .btn-group {
+                display: flex;
+                gap: 20px;
+                margin-top: 35px;
+            }
+            
+            button { 
+                padding: 10px 20px; 
+                color: white; 
+                border: none; 
+                cursor: pointer; 
+                border-radius: 4px; 
+                font-weight: bold; 
+                width: 100%; 
+                height: 40px;     
+            }
+            button:hover { opacity: 0.9; }
+
+            /* ホームボタン */
+            .btn-home { background-color: #4496d3; }
+        </style>
+    </head>
+
+    <body>
+
+        <!-- ヘッダー -->
+        <div class="header-container">
+
+                <h1>📚 蔵書貸出管理システム 📚</h1>
+                
+                <div class="user-info">
+                    ログイン中: <span class="user-name">山田 太郎</span> 
+                    <span class="user-id">(ID: 0000001)</span>
+                </div>
         </div>
 
+        <div class="confirm-container">
+            <h2>操作が確定しました！</h2>
 
-        <div class="btn-group">
-            <button class="btn-home" onclick="goHome()">ホームへ</button>
+            <div class="confirm-item">
+                <div class="confirm-value" id="explanation">あなたの操作は正常に完了しました</div>
+            </div>
+
+
+            <div class="btn-group">
+                <button class="btn-home" onclick="goHome()">ホームへ</button>
+            </div>
         </div>
-    </div>
-    <script>
-        // 「ホームへ」ボタン：ホーム画面へ移動
-        function goHome() {
-            // ホーム画面（index.html）へ移動する処理
-            window.location.href = 'index.html';
-        }
-    </script>
-</body>
+        <script>
+            // 「ホームへ」ボタン：ホーム画面へ移動
+            function goHome() {
+                // ホーム画面（index.html）へ移動する処理
+                window.location.href = 'index.html';
+            }
+        </script>
+    </body>
 </html>

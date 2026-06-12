@@ -1,215 +1,218 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>蔵書貸出管理アプリ</title>
-<style>
-    /* タイトルとユーザー情報を横並びにする */
-        .header-container {
-            display: flex;
-            justify-content: space-between; /* タイトルを左、ユーザー情報を右に引き離す */
-            align-items: center;            /* 上下の高さを中央で綺麗に揃える */
-            border-bottom: 3px solid #333;   /* 下に細い線を入れてヘッダーらしく引き締める */
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
+    <head>
+        <meta charset="UTF-8">
+        <title>蔵書貸出管理アプリ</title>
+        <style>
+            /* タイトルとユーザー情報を横並びにする */
+                .header-container {
+                    display: flex;
+                    justify-content: space-between; /* タイトルを左、ユーザー情報を右に引き離す */
+                    align-items: center;            /* 上下の高さを中央で綺麗に揃える */
+                    border-bottom: 3px solid #333;   /* 下に細い線を入れてヘッダーらしく引き締める */
+                    padding-bottom: 10px;
+                    margin-bottom: 30px;
+                }
 
-        /* 既存のh1の余白をリセットして綺麗に整える */
-        h1 { 
-            color: #333; 
-            margin: 0; 
-        }
+                /* 既存のh1の余白をリセットして綺麗に整える */
+                h1 { 
+                    color: #333; 
+                    margin: 0; 
+                }
 
-        /* ユーザー情報のテキストスタイル */
-        .user-info {
-            font-size: 16px;
-            color: #555;
-            font-weight: bold;
-            background: #e9ecef;       /* 薄いグレーの背景で少しボックスっぽく */
-            padding: 8px 16px;
-            border-radius: 20px;       /* 角を丸くしてモダンに */
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
+                /* ユーザー情報のテキストスタイル */
+                .user-info {
+                    font-size: 16px;
+                    color: #555;
+                    font-weight: bold;
+                    background: #e9ecef;       /* 薄いグレーの背景で少しボックスっぽく */
+                    padding: 8px 16px;
+                    border-radius: 20px;       /* 角を丸くしてモダンに */
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+                }
 
-        .user-name {
-            color: #4496d3;            /* 名前をあなたのテーマカラー（青）に */
-            margin-right: 5px;
-        }
+                .user-name {
+                    color: #4496d3;            /* 名前をあなたのテーマカラー（青）に */
+                    margin-right: 5px;
+                }
 
-        .user-id {
-            color: #777;
-            font-size: 14px;
-        }
+                .user-id {
+                    color: #777;
+                    font-size: 14px;
+                }
 
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f4f4f9;
-        }
-        
-        h1 { color: #333; }
-        
-        /* フォームを左右に並べるためのコンテナ */
-        .flex-container {
-            display: flex;
-            gap: 40px; /* 左右の余白 */
-            margin-bottom: 40px;
-        }
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 40px;
+                    background-color: #f4f4f9;
+                }
+                
+                h1 { color: #333; }
+                
+                /* フォームを左右に並べるためのコンテナ */
+                .flex-container {
+                    display: flex;
+                    gap: 40px; /* 左右の余白 */
+                    margin-bottom: 40px;
+                }
 
-        /* 中身の高さに関わらず、ボックス全体の高さを揃える */
-        .form-box {
-            flex: 1; 
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            
-            /* ボックス内を縦並びのFlexboxにし、ボタンを下揃えにする */
-            display: flex;
-            flex-direction: column;
-        }
+                /* 中身の高さに関わらず、ボックス全体の高さを揃える */
+                .form-box {
+                    flex: 1; 
+                    background: white;
+                    padding: 20px;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                    
+                    /* ボックス内を縦並びのFlexboxにし、ボタンを下揃えにする */
+                    display: flex;
+                    flex-direction: column;
+                }
 
-        h2 {
-            margin-top: 0;
-            color: #444;
-            border-bottom: 2px solid #ddd;
-            padding-bottom: 8px;
-        }
-        
-        .form-group { margin-bottom: 15px; }
-        
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        
-        input[type="text"] { width: 100%; padding: 8px; box-sizing: border-box; }
-        
-        /* ボタンの共通スタイル */
-        button { 
-            padding: 10px 20px; 
-            color: white; 
-            border: none; 
-            cursor: pointer; 
-            border-radius: 4px; 
-            font-weight: bold; 
-            width: 100%; 
-            margin-top: auto; /* 上の要素に関わらず、ボタンを一番下に設置する */
-            height: 40px;     /* 高さを明示的に統一 */
-        }
+                h2 {
+                    margin-top: 0;
+                    color: #444;
+                    border-bottom: 2px solid #ddd;
+                    padding-bottom: 8px;
+                }
+                
+                .form-group { margin-bottom: 15px; }
+                
+                label {
+                    display: block;
+                    margin-bottom: 5px;
+                    font-weight: bold;
+                }
+                
+                input[type="text"] { width: 100%; padding: 8px; box-sizing: border-box; }
+                
+                /* ボタンの共通スタイル */
+                button { 
+                    padding: 10px 20px; 
+                    color: white; 
+                    border: none; 
+                    cursor: pointer; 
+                    border-radius: 4px; 
+                    font-weight: bold; 
+                    width: 100%; 
+                    margin-top: auto; /* 上の要素に関わらず、ボタンを一番下に設置する */
+                    height: 40px;     /* 高さを明示的に統一 */
+                }
 
-        button:hover { opacity: 0.9; }
+                button:hover { opacity: 0.9; }
 
-        /* 左側：検索は緑 */
-        .btn-register { background-color: #28a745; }
-        /* 右側：返却は青 */
-        .btn-return { background-color: #4496d3; }
+                /* 左側：検索は緑 */
+                .btn-register { background-color: #28a745; }
+                /* 右側：返却は青 */
+                .btn-return { background-color: #4496d3; }
 
-        /* テーブルのスタイル */
-        table { 
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-        th {
-            background-color: #343a40;
-            color: white;
-        }
-        .status-badge {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        .available {
-            background-color: #d4edda;
-            color: #155724;
-        }
-        .borrowed {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-        .not-for-loan {
-            background-color: #fff352;
-            color: #262626;
-        }
-    </style>
-</head>
+                /* テーブルのスタイル */
+                table { 
+                    width: 100%;
+                    border-collapse: collapse;
+                    background: white;
+                    border-radius: 8px;
+                    overflow: hidden;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                }
+                
+                th, td {
+                    border: 1px solid #ddd;
+                    padding: 12px;
+                    text-align: left;
+                }
+                th {
+                    background-color: #343a40;
+                    color: white;
+                }
+                .status-badge {
+                    padding: 4px 8px;
+                    border-radius: 4px;
+                    font-size: 12px;
+                    font-weight: bold;
+                }
+                .available {
+                    background-color: #d4edda;
+                    color: #155724;
+                }
+                .borrowed {
+                    background-color: #f8d7da;
+                    color: #721c24;
+                }
+                .not-for-loan {
+                    background-color: #fff352;
+                    color: #262626;
+                }
+        </style>
+    </head>
 
-<body>
+    <body>
 
-    <div class="header-container">
-        <h1>📚 蔵書貸出管理システム 📚</h1>
-        <div class="user-info">
-            ログイン中: <span class="user-name">山田 太郎</span> 
-            <span class="user-id">(ID: U001)</span>
-        </div>
-    </div>
+        <!-- ヘッダー -->
+        <div class="header-container">
 
-    <div class="flex-container">
-
-        <div class="form-box">
-            <h2>🚪 ホーム画面へ戻る</h2>
-            <p style="color: #666; font-size: 14px; margin-top: 10px;">
-                ホーム画面へ戻ります
-            </p>
-            <button class="btn-return" onclick="returnindex()">ホームへ</button>
+                <h1>📚 蔵書貸出管理システム 📚</h1>
+                
+                <div class="user-info">
+                    ログイン中: <span class="user-name">山田 太郎</span> 
+                    <span class="user-id">(ID: 0000001)</span>
+                </div>
         </div>
 
-        <div style="flex: 1;"></div>
-    </div>
+        <div class="flex-container">
 
-    <h2>貸出中図書一覧</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>蔵書番号</th>
-                <th>タイトル</th>
-                <th>著者名</th>
-                <th>カテゴリ</th>
-                <th>ステータス</th>
-                <th>貸出日</th>
-                <th>返却期限</th>
-                <th>返却ボタン</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>2</td>
-                <td>0000002</td>
-                <td>モダンWeb開発入門</td>
-                <td>山田 一郎</td>
-                <td>フロントエンド</td>
-                <td><span class="status-badge borrowed">貸出中</span></td>
-                <td>2026/06/04</td>
-                <td>2026/09/04</td>
-                <td><button style="background-color: #4496d3;"onclick="return_confirm()">返却する</button></td>
-            </tr>
-        </tbody>
-    </table>
-    <script>
+            <div class="form-box">
+                <h2>🚪 ホーム画面へ戻る</h2>
+                <p style="color: #666; font-size: 14px; margin-top: 10px;">
+                    ホーム画面へ戻ります
+                </p>
+                <button class="btn-return" onclick="returnindex()">ホームへ</button>
+            </div>
 
-        function returnindex() {
-            // ホーム画面へ移動する処理
-            window.location.href = 'index.html';
-        }
+            <div style="flex: 1;"></div>
+        </div>
 
-        function return_confirm() {
-            // 返却確定画面へ移動する処理
-            window.location.href = 'return_confirm.html';
-        }
-    </script>
+        <h2>貸出中図書一覧</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>蔵書番号</th>
+                    <th>タイトル</th>
+                    <th>著者名</th>
+                    <th>カテゴリ</th>
+                    <th>ステータス</th>
+                    <th>貸出日</th>
+                    <th>返却期限</th>
+                    <th>返却ボタン</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2</td>
+                    <td>0000002</td>
+                    <td>モダンWeb開発入門</td>
+                    <td>山田 一郎</td>
+                    <td>フロントエンド</td>
+                    <td><span class="status-badge borrowed">貸出中</span></td>
+                    <td>2026/06/04</td>
+                    <td>2026/09/04</td>
+                    <td><button style="background-color: #4496d3;"onclick="return_confirm()">返却する</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <script>
 
-</body>
+            function returnindex() {
+                // ホーム画面へ移動する処理
+                window.location.href = 'index.html';
+            }
+
+            function return_confirm() {
+                // 返却確定画面へ移動する処理
+                window.location.href = 'return_confirm.html';
+            }
+        </script>
+
+    </body>
 </html>
