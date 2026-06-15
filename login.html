@@ -87,7 +87,7 @@
             /* ログインボタンの色 */
             .btn-login { background-color: #28a745; }
 
-            /* 新規登録の設定 */
+            /* 新規登録リンクの設定 */
             .signup-text {
                 text-align: center;
                 margin-top: 25px;
@@ -95,13 +95,21 @@
                 color: #555
             }
 
-            span{
+            .signup-text span{
                 color: #4496d3; 
                 cursor: pointer; 
                 font-weight: bold; 
                 text-decoration: underline; 
                 margin-left: 5px;
             }
+
+            /* ★管理者アイコン用のクールな演出★ */
+            .admin-icon {
+                cursor: pointer; /* 重なったときに指マークにして押せることを認識させる */
+                display: inline-block;
+                transition: transform 0.2s ease; /* ホバー時にちょっと動く可愛いエフェクト用 */
+            }
+
 
         </style>
 
@@ -111,7 +119,7 @@
         
         <div class="header-container">
             
-            <h1>📚 蔵書貸出管理システム 📚</h1>
+            <h1><span class="admin-icon" onclick="goToAdmin()">📚</span> 蔵書貸出管理システム 📚</h1>
             
         </div>
         
@@ -150,6 +158,12 @@
         </div>
 
         <script>
+
+            // ★追加：管理者画面へ遷移する秘密の関数★
+            function goToAdmin() {
+                // 管理者画面のファイルへ遷移します
+                window.location.href = 'admin_login.html';
+            }
 
             function login() {
                 // // ログイン処理
