@@ -87,13 +87,13 @@
                 color: #111;
             }
 
-            .highlight-date {
+            .limit-date {
                 color: #d9534f; /* 期限日赤 */
                 font-weight: bold;
                 font-size: 18px;
             }
 
-            /* ボタンエリア：左右並び */
+            /* ボタンのグループ */
             .btn-group {
                 display: flex;
                 gap: 20px;
@@ -111,6 +111,7 @@
                 height: 40px;     
             }
 
+            /* カーソルを合わせるとハイライトになる機能 */
             button:hover { opacity: 0.9; }
             
             /* 確定ボタン */
@@ -139,23 +140,23 @@
 
             <div class="confirm-item">
                 <div class="confirm-label">蔵書番号</div>
-                <div class="confirm-value" id="info-book-number">0000001</div>
+                <div class="confirm-value" id="book-number">0000001</div>
             </div>
             <div class="confirm-item">
                 <div class="confirm-label">タイトル</div>
-                <div class="confirm-value" id="info-title"><strong>基本情報技術者試験対策</strong></div>
+                <div class="confirm-value" id="book-title"><strong>基本情報技術者試験対策</strong></div>
             </div>
             <div class="confirm-item">
                 <div class="confirm-label">著者名</div>
-                <div class="confirm-value" id="info-author">田中 太郎</div>
+                <div class="confirm-value" id="book-author">田中 太郎</div>
             </div>
             <div class="confirm-item">
                 <div class="confirm-label">カテゴリ</div>
-                <div class="confirm-value" id="info-category">資格</div>
+                <div class="confirm-value" id="book-category">資格</div>
             </div>
             <div class="confirm-item">
                 <div class="confirm-label">返却期限</div>
-                <div class="confirm-value highlight-date" id="info-due-date">2026/09/04</div>
+                <div class="confirm-value limit-date" id="limitdate">2026/09/04</div>
             </div>
 
             <div class="btn-group">
