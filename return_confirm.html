@@ -157,7 +157,7 @@
 
             <div class="btn-group">
                 <button class="btn-back" onclick="goBack()">戻る</button>
-                <button class="btn-confirm" onclick="executeBorrow()">確定する</button>
+                <button class="btn-confirm" onclick="confirmReturn()">確定する</button>
             </div>
         </div>
 
@@ -171,7 +171,7 @@
             }
 
             // 「確定」ボタン
-            async function executeBorrow() {
+            async function confirmReturn() {
                 // 確定画面へ遷移
                 window.location.href = 'confirm.html';
             }
