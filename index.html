@@ -2,24 +2,23 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>蔵書貸出管理アプリ</title>
     <style>
         /* 全体の基本スタイル */
         body { 
             font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f4f4f9;
+            margin: 20px;
+            background-color: #3da8e3;
         }
 
         /* 中身の高さに関わらず、ボックス全体の高さを揃える */
         .form-box {
             flex: 1; 
-            background: white;
+            background: #ffffff;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-                
-            /* ボックス内を縦並びのFlexboxにし、ボタンを下揃えにする */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
         }
@@ -29,31 +28,33 @@
             display: flex;
             justify-content: space-between; 
             align-items: center;            
-            border-bottom: 3px solid #333;   
+            border-bottom: 3px solid #ffffff;
             padding-bottom: 10px;
             margin-bottom: 30px;
         }
 
         h1 { 
-            color: #333; 
+            color: #ffffff; 
             margin: 0; 
+            font-size: 32px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
 
         /* ユーザー情報のテキストスタイル */
         .user-info {
-            font-size: 16px;
-            color: #555;
+            font-size: 14px;
+            color: #333333;
             font-weight: bold;
-            background: #e9ecef;       
+            background: #ffffff;
             padding: 8px 16px;
             border-radius: 20px;       
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
             
         /* 管理者用バッジのスタイル */
         .admin-badge { 
             background-color: #ef4444;
-            color: ffffff;
+            color: #ffffff;
             padding: 2px 8px;
             border-radius: 4px;
             font-size: 12px;
@@ -63,15 +64,16 @@
         
         /* 管理者専用メニューエリア全体の囲み */
         .admin-menu-container {
-            background-color: #fef2f2;
-            border: 1px solid #fca5a5;
+            background-color: #f8fafc;
+            border: 2px solid #e2e8f0;
             padding: 20px;
             margin-bottom: 30px;
             border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         .admin-menu-container h3 {
             margin-top: 0;
-            color: #991b1b;
+            color: #1e3a8a;
         }
 
         /* デモ用の簡易アカウント切り替えボックス */
@@ -95,14 +97,23 @@
             border: 1px solid #ccc;
         }
 
+        /* テーブルコンテナ：テーブルが画面幅を超えた場合に横スクロールさせる */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-bottom: 30px;
+        }
+
         /* テーブルのスタイル */
         table { 
             width: 100%;
+            min-width: 800px;
             border-collapse: collapse;
-            background: white;
+            background: #ffffff;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
             
         th, td {
@@ -111,8 +122,8 @@
             text-align: left;
         }
         th {
-            background-color: #343a40;
-            color: white;
+            background-color: #1e3a8a;
+            color: #ffffff;
         }
 
         .status-badge {
@@ -136,7 +147,6 @@
             background-color: #fff352;
             color: #262626;
         }
-        /* テーブルの設定終わり */
 
         /* フォームのスタイル */
         .flex-container {
@@ -147,9 +157,10 @@
 
         h2 {
             margin-top: 0;
-            color: #444;
-            border-bottom: 2px solid #ddd;
+            color: #333333;
+            border-bottom: 2px solid #3da8e3; /* ボックス内の見出しの下線は青のまま */
             padding-bottom: 8px;
+            font-size: 20px;
         }
 
         .form-group { margin-bottom: 15px; }
@@ -158,6 +169,7 @@
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
+            color: #555555;
         }
         
         input[type="text"] { width: 100%; padding: 8px; box-sizing: border-box; }
@@ -165,7 +177,7 @@
         /* ボタンの共通スタイル */
         button { 
             padding: 10px 20px; 
-            color: white; 
+            color: #ffffff; 
             border: none; 
             cursor: pointer; 
             border-radius: 4px; 
@@ -174,22 +186,66 @@
             height: 40px;     
         }
 
-        /* 左側：検索は緑 */
         .btn-search {
-            background-color: #28a745;
+            background-color: #16a34a;
             margin-top: auto;
         }
 
-        /* 左側：検索リセットはグレー */
         .btn-reset { 
             margin-top: 15px;
-            background-color: #8a8c8e; 
+            background-color: #6b7280; 
         }
 
-        /* 管理者用のアクションボタン（一例として赤系で統一） */
         .btn-admin-action {
-            background-color: #dc2626;
+            background-color: #b91c1c;
             margin-top: auto;
+        }
+
+        .btn-borrow {
+            background-color: #2563eb;
+        }
+
+        /* ==========================================================================
+           一覧の見出しスタイル
+           ========================================================================== */
+        .list-title {
+            color: #ffffff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            /* 青背景と同化しないよう、下線の色を白（#ffffff）で上書きする */
+            border-bottom: 2px solid #ffffff !important; 
+            padding-bottom: 8px;
+            margin-top: 40px;
+            font-size: 24px; /* 標準サイズと同じ大きさ（24px）に明示的に設定 */
+        }
+
+        /* スマートフォン向けのレスポンシブスタイル */
+        @media (max-width: 768px) {
+            body {
+                margin: 15px;
+            }
+
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .flex-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .spacer-box {
+                display: none;
+            }
+            
+            h1 {
+                font-size: 24px; /* スマホの時だけ、画面からはみ出さないように程よく縮小する */
+            }
+
+            .list-title {
+                font-size: 20px; /* スマホの時だけ、バランスを見て少し縮小する */
+            }
         }
     </style>
 </head>
@@ -218,30 +274,18 @@
         <div class="flex-container">
             
             <div class="form-box">
-                <h2>📝 新規蔵書登録</h2>
-                <div class="form-group">
-                    <label for="reg-book-title">書籍タイトル</label>
-                    <input type="text" id="reg-book-title" placeholder="例：リファクタリング">
-                </div>
-                <button class="btn-admin-action" onclick="registerBook()">登録する</button>
+                <h2>💿 貸出図書新規登録</h2>
+                <button class="btn-admin-action" onclick="registerBook()">登録画面</button>
             </div>
 
             <div class="form-box">
-                <h2>👥 ユーザー権限管理</h2>
-                <div class="form-group">
-                    <label for="manage-user-id">対象ユーザーID</label>
-                    <input type="text" id="manage-user-id" placeholder="例：0000002">
-                </div>
-                <button class="btn-admin-action" onclick="manageUser()">権限変更</button>
+                <h2>⤴ 貸出確定</h2>
+                <button class="btn-admin-action" onclick="manageUser()">貸出画面</button>
             </div>
 
             <div class="form-box">
-                <h2>📊 貸出履歴データ</h2>
-                <div class="form-group">
-                    <label for="history-search">履歴キーワード検索</label>
-                    <input type="text" id="history-search" placeholder="例：返却遅延">
-                </div>
-                <button class="btn-admin-action" onclick="viewHistory()">履歴を確認</button>
+                <h2>⤵ 返却受付</h2>
+                <button class="btn-admin-action" onclick="viewHistory()">返却画面</button>
             </div>
 
         </div>
@@ -250,7 +294,7 @@
     <div class="flex-container">
 
         <div class="form-box">
-            <h2>🔎 蔵書の検索</h2>
+            <h2>🔎 貸出図書の検索</h2>
             
             <div class="form-group">
                 <label for="book-title">タイトル検索（部分一致）</label>
@@ -266,72 +310,69 @@
             <button class="btn-reset" onclick="searchReset()">検索リセット</button>
         </div>
 
-        <div style="flex: 1;">
-            </div>
+        <div class="spacer-box" style="flex: 1;"></div>
 
     </div>
 
 
-    <h2>貸出図書一覧</h2>
+    <h2 class="list-title">貸出図書一覧</h2>
         
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>蔵書番号</th>
-                <th>タイトル</th>
-                <th>著者名</th>
-                <th>カテゴリ</th>
-                <th>ステータス</th>
-                <th>貸出日</th>
-                <th>返却期限</th>
-                <th>貸出ボタン</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>0000001</td>
-                <td>基本情報技術者試験対策</td>
-                <td>田中 太郎</td>
-                <td>資格</td>
-                <td><span class="status-badge available">貸出可能</span></td>
-                <td>-</td>
-                <td>-</td>
-                <td><button style="background-color: #4496d3;" onclick="borrowBook()">貸出</button></td>
-            </tr>
-             <tr>
-                <td>2</td>
-                <td>0000002</td>
-                <td>モダンWeb開発入門</td>
-                <td>山田 一郎</td>
-                <td>フロントエンド</td>
-                <td><span class="status-badge borrowed">貸出中</span></td>
-                <td>2026/06/04</td>
-                <td>2026/09/04</td>
-                <td><button  disabled style="background-color: #8a8c8e;">貸出</button></td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>0000003</td>
-                <td>AWS認定資格試験テキスト</td>
-                <td>佐藤 二郎</td>
-                <td>資格</td>
-                <td><span class="status-badge not-for-loan">社内閲覧</span></td>
-                <td>-</td>
-                <td>-</td>
-                <td><button disabled style="background-color: #8a8c8e;">貸出</button></td>
-            </tr>
-        </tbody>
-
-    </table>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>蔵書番号</th>
+                    <th>タイトル</th>
+                    <th>著者名</th>
+                    <th>カテゴリ</th>
+                    <th>ステータス</th>
+                    <th>貸出日</th>
+                    <th>返却期限</th>
+                    <th>貸出ボタン</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>0000001</td>
+                    <td>基本情報技術者試験対策</td>
+                    <td>田中 太郎</td>
+                    <td>資格</td>
+                    <td><span class="status-badge available">貸出可能</span></td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td><button class="btn-borrow" onclick="borrowBook()">貸出</button></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>0000002</td>
+                    <td>モダンWeb開発入門</td>
+                    <td>山田 一郎</td>
+                    <td>フロントエンド</td>
+                    <td><span class="status-badge borrowed">貸出中</span></td>
+                    <td>2026/06/04</td>
+                    <td>2026/09/04</td>
+                    <td><button disabled style="background-color: #8a8c8e; cursor: not-allowed;">貸出</button></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>0000003</td>
+                    <td>AWS認定資格試験テキスト</td>
+                    <td>佐藤 二郎</td>
+                    <td>資格</td>
+                    <td><span class="status-badge not-for-loan">社内閲覧</span></td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td><button disabled style="background-color: #8a8c8e; cursor: not-allowed;">貸出</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
         
     <script>
-        // 自動でユーザーの権限をチェックして画面表示を切り替える関数
         function checkUserRole() {
             const selectedRole = document.getElementById('test-user').value;
-
             const displayNameEl = document.getElementById('display-name');
             const adminBadgeEl = document.getElementById('admin-badge');
             const adminMenuEl = document.getElementById('admin-menu');
@@ -347,27 +388,21 @@
             }
         }
 
-        // 管理者用のアクション関数（モック処理）
-        function registerBook() {
+        function registerBook() { 
             alert('蔵書登録処理（モック）が呼び出されました');
         }
-
-        function manageUser() {
+        function manageUser() { 
             alert('ユーザー権限変更処理（モック）が呼び出されました');
         }
-
         function viewHistory() {
             alert('貸出履歴確認処理（モック）が呼び出されました');
         }
-
         function returnBook() {
             window.location.href = 'return.html';
         }
-
         function borrowBook() {
             window.location.href = 'borrow.html';
         }
-
         function searchReset() {
             document.getElementById('book-title').value = '';
             document.getElementById('book-category').value = '';
