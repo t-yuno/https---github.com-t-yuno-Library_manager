@@ -275,17 +275,17 @@
             
             <div class="form-box">
                 <h2>💿 貸出図書新規登録</h2>
-                <button class="btn-admin-action" onclick="registerBook()">登録画面</button>
+                <button class="btn-admin-action" onclick="moveToRegisterBook()">登録画面</button>
             </div>
 
             <div class="form-box">
                 <h2>⤴ 貸出確定</h2>
-                <button class="btn-admin-action" onclick="manageUser()">貸出画面</button>
+                <button class="btn-admin-action" onclick="moveToBorrowBook()">貸出画面</button>
             </div>
 
             <div class="form-box">
                 <h2>⤵ 返却受付</h2>
-                <button class="btn-admin-action" onclick="viewHistory()">返却画面</button>
+                <button class="btn-admin-action" onclick="moveToReturnBook()">返却画面</button>
             </div>
 
         </div>
@@ -388,19 +388,13 @@
             }
         }
 
-        function registerBook() { 
-            alert('蔵書登録処理（モック）が呼び出されました');
+        function moveToRegisterBook() {
+            window.location.href = 'register.html';
         }
-        function manageUser() { 
-            alert('ユーザー権限変更処理（モック）が呼び出されました');
-        }
-        function viewHistory() {
-            alert('貸出履歴確認処理（モック）が呼び出されました');
-        }
-        function returnBook() {
+        function moveToReturnBook() {
             window.location.href = 'return.html';
         }
-        function borrowBook() {
+        function moveToBorrowBook() {
             window.location.href = 'borrow.html';
         }
         function searchReset() {
