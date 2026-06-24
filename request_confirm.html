@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蔵書貸出管理アプリ - 申請完了</title>
+    <style>
+        /* 全体の基本スタイル */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            /* 背景色を他の画面と同じ爽やかな青色（#3da8e3）に指定 */
+            background-color: #3da8e3;
+        }
+
+        /* ヘッダーのレイアウト */
+        .header-container {
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;            
+            /* 背景色に合わせて白線の境界線にする */
+            border-bottom: 3px solid #ffffff;   
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        h1 { 
+            /* 背景が青なので、ヘッダーの文字色は白にする */
+            color: #ffffff; 
+            margin: 0; 
+            font-size: 32px; /* index.htmlの標準サイズに統一 */
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        /* ユーザー情報のテキストスタイル（他の画面と完全統一） */
+        .user-info {
+            font-size: 14px;
+            color: #333333;
+            font-weight: bold;
+            background: #ffffff;
+            padding: 8px 16px;
+            border-radius: 20px;       
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* 中央配置コンテナ */
+        .confirm-container {
+            max-width: 600px;
+            margin: 40px auto;
+            /* ボックスの背景色は白を指定する */
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #333333;
+            /* 見出しの下線に全体のテーマカラーの青を使用する */
+            border-bottom: 2px solid #3da8e3;
+            padding-bottom: 8px;
+            margin-bottom: 25px;
+            font-size: 20px;
+        }
+
+        /* メッセージエリアのレイアウト調整 */
+        .confirm-item {
+            padding: 10px 0;
+            font-size: 16px;
+            line-height: 1.8; /* 行間を広げて読みやすくする */
+        }
+
+        .confirm-value {
+            color: #333333;
+        }
+
+        /* メッセージ内の箇条書き風スタイル */
+        .info-list {
+            margin-top: 15px;
+            padding-left: 20px;
+            color: #555555;
+        }
+        .info-list li {
+            margin-bottom: 8px;
+        }
+
+        /* ボタングループ */
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 35px;
+        }
+        
+        /* ボタンの共通スタイル */
+        button { 
+            padding: 10px 20px; 
+            color: #ffffff; 
+            border: none; 
+            cursor: pointer; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            width: 100%; 
+            height: 40px;     
+            font-size: 16px;
+        }
+        button:hover { opacity: 0.9; }
+
+        /* ホームボタン：他の画面の確定系ボタンと同じ緑色に統一 */
+        .btn-home { background-color: #16a34a; }
+
+        /* スマートフォン向けのレスポンシブスタイル */
+        @media (max-width: 768px) {
+            body {
+                margin: 15px;
+            }
+
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .confirm-container {
+                margin: 20px auto;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 24px; /* スマホの時だけ、画面からはみ出さないように縮小する */
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ヘッダー -->
+    <div class="header-container">
+        <h1>📚 蔵書貸出管理システム</h1>
+            
+        <div class="user-info">
+            ログイン中: <span class="user-name">山田 太郎</span> 
+            <span class="user-id">(ID: 0000001)</span>
+        </div>
+    </div>
+
+    <!-- 完了メッセージ用白ボックス -->
+    <div class="confirm-container">
+        <h2>操作が確定しました！</h2>
+
+        <div class="confirm-item">
+            <div class="confirm-value" id="explanation">
+                貸出の申請が正常に完了しました！<br>
+                ただいま、以下の手順で手続きを進めております。
+                
+                <ul class="info-list">
+                    <li>マネジメント担当者が、図書の貸出が可能かどうかを確認しています。</li>
+                    <li>確認が取れ次第、マネジメント担当者より図書の受け渡し日に関する調整のご連絡を差し上げます。</li>
+                </ul>
+                
+                お手数ですが、連絡があるまでしばらくお待ちください。
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn-home" onclick="goHome()">ホームへ戻る</button>
+        </div>
+    </div>
+
+    <script>
+        // 「ホームへ戻る」ボタン：メインの一覧画面へ戻る
+        function goHome() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
