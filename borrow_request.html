@@ -1,182 +1,208 @@
 <!DOCTYPE html>
 <html lang="ja">
-    <head>
-        <meta charset="UTF-8">
-        <title>蔵書貸出管理アプリ</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蔵書貸出管理アプリ</title>
+    <style>
+        /* 全体の基本スタイル */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            /* 背景色をindex.htmlと同じ爽やかな青色（#3da8e3）に指定 */
+            background-color: #3da8e3;
+        }
 
-        <style>
+        /* ヘッダーのレイアウト */
+        .header-container {
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;            
+            /* 背景色に合わせて白線の境界線にする */
+            border-bottom: 3px solid #ffffff;   
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
 
-            /* タイトルとユーザー情報を横並びにする */
-            .header-container {
-                display: flex;
-                justify-content: space-between; /* タイトルを左、ユーザー情報を右に引き離す */
-                align-items: center;            /* 上下の高さを中央で綺麗に揃える */
-                border-bottom: 3px solid #333;   /* 下に細い線を入れてヘッダーらしく引き締める */
-                padding-bottom: 10px;
-                margin-bottom: 30px;
-            }
+        h1 { 
+            /* 背景が青なので、ヘッダーの文字色は白にする */
+            color: #ffffff; 
+            margin: 0; 
+            font-size: 32px; /* index.htmlの標準サイズに統一 */
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
 
-            h1 { 
-                color: #333; 
-                margin: 0; 
-            }
+        /* ユーザー情報のテキストスタイル（index.htmlのデザインと完全統一） */
+        .user-info {
+            font-size: 14px;
+            color: #333333;
+            font-weight: bold;
+            background: #ffffff;
+            padding: 8px 16px;
+            border-radius: 20px;       
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
 
-            /* ユーザー情報のテキストスタイル */
-            .user-info {
-                font-size: 16px;
-                color: #555;
-                font-weight: bold;
-                background: #e9ecef;       /* 薄いグレーの背景で少しボックスっぽく */
-                padding: 8px 16px;
-                border-radius: 20px;       /* 角を丸くしてモダンに */
-                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            }
-            
-            .user-name {
-                color: #4496d3;
-                margin-right: 5px;
-            }
+        /* 確認画面専用の中央配置コンテナ */
+        .confirm-container {
+            max-width: 600px;
+            margin: 40px auto;
+            /* ボックスの背景色は白を指定する */
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
 
-            .user-id {
-                color: #777;
-                font-size: 14px;
-            }
+        h2 {
+            margin-top: 0;
+            color: #333333;
+            /* 見出しの下線に全体のテーマカラーの青を使用する */
+            border-bottom: 2px solid #3da8e3;
+            padding-bottom: 8px;
+            margin-bottom: 25px;
+            font-size: 20px;
+        }
 
-            /* タイトルとユーザー情報を横並びにする_終わり */
+        /* 確認項目のレイアウト */
+        .confirm-item {
+            display: flex;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 16px;
+        }
 
+        .confirm-label {
+            width: 140px;
+            font-weight: bold;
+            color: #555555;
+        }
+
+        .confirm-value {
+            flex: 1;
+            color: #111111;
+        }
+
+        /* 返却期限日：視認性の高い赤色で強調 */
+        .limit-date {
+            color: #ef4444; 
+            font-weight: bold;
+        }
+
+        /* ボタンのグループ */
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 35px;
+        }
+        
+        /* ボタンの共通スタイル */
+        button { 
+            padding: 10px 20px; 
+            color: #ffffff; 
+            border: none; 
+            cursor: pointer; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            width: 100%; 
+            height: 40px;     
+            font-size: 16px;
+        }
+        button:hover { opacity: 0.9; }
+        
+        /* 確定ボタン：緑色に統一 */
+        .btn-confirm { background-color: #16a34a; }
+        
+        /* 戻るボタン：グレーに統一 */
+        .btn-back { background-color: #6b7280; }
+
+        /* スマートフォン向けのレスポンシブスタイル */
+        @media (max-width: 768px) {
             body {
-                font-family: Arial, sans-serif;
-                margin: 40px;
-                background-color: #f4f4f9;
+                margin: 15px;
             }
 
-            /* 確認画面専用の中央配置コンテナ */
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
             .confirm-container {
-                max-width: 600px;
-                margin: 40px auto;
-                background: white;
-                padding: 30px;
-                border-radius: 8px;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                margin: 20px auto;
+                padding: 20px;
             }
 
-            h2 {
-                margin-top: 0;
-                color: #444;
-                border-bottom: 2px solid #ddd;
-                padding-bottom: 8px;
-                margin-bottom: 25px;
+            h1 {
+                font-size: 24px; /* スマホの時だけ、画面からはみ出さないように縮小する */
             }
 
-            /* 確認項目のレイアウト */
             .confirm-item {
-                display: flex;
-                padding: 12px 0;
-                border-bottom: 1px solid #eee;
-                font-size: 16px;
+                flex-direction: column; /* スマホでは縦並びにして見やすくする */
+                gap: 4px;
             }
 
             .confirm-label {
-                width: 140px;
-                font-weight: bold;
-                color: #555;
+                width: 100%;
             }
 
-            .confirm-value {
-                flex: 1;
-                color: #111;
-            }
-
-            .limit-date {
-                color: #d9534f; /* 期限日赤 */
-                font-weight: bold;
-                font-size: 18px;
-            }
-
-            /* ボタンのグループ */
             .btn-group {
-                display: flex;
-                gap: 20px;
-                margin-top: 35px;
+                flex-direction: column; /* スマホではボタンを縦並びにして押しやすくする */
+                gap: 10px;
             }
-        
-            button { 
-                padding: 10px 20px; 
-                color: white; 
-                border: none; 
-                cursor: pointer; 
-                border-radius: 4px; 
-                font-weight: bold; 
-                width: 100%; 
-                height: 40px;     
-            }
+        }
+    </style>
+</head>
 
-            /* カーソルを合わせるとハイライトになる機能 */
-            button:hover { opacity: 0.9; }
+<body>
+
+    <!-- ヘッダー -->
+    <div class="header-container">
+        <h1>📚 貸出図書管理システム</h1>
             
-            /* 確定ボタン */
-            .btn-confirm { background-color: #4496d3; }
-            
-            /* 戻るボタン */
-            .btn-back { background-color: #8a8c8e; }
+        <div class="user-info">
+            ログイン中: <span class="user-name">山田 太郎</span> 
+            <span class="user-id">(ID: 0000001)</span>
+        </div>
+    </div>
 
-        </style>
-    </head>
+    <!-- 貸出確認用白ボックス -->
+    <div class="confirm-container">
+        <h2>以下の図書を借りますか？</h2>
 
-    <body>
-
-        <!-- ヘッダー -->
-        <div class="header-container">
-                <h1>📚 蔵書貸出管理システム 📚</h1>
-                
-                    <div class="user-info">
-                    ログイン中: <span class="user-name">山田 太郎</span> 
-                    <span class="user-id">(ID: 0000001)</span>
-                </div>
+        <div class="confirm-item">
+            <div class="confirm-label">管理番号</div>
+            <div class="confirm-value" id="book-number">0000001</div>
+        </div>
+        <div class="confirm-item">
+            <div class="confirm-label">書名</div>
+            <div class="confirm-value" id="book-title"><strong>基本情報技術者試験対策</strong></div>
+        </div>
+        <div class="confirm-item">
+            <div class="confirm-label">ジャンル</div>
+            <div class="confirm-value" id="book-category">資格</div>
+        </div>
+        <div class="confirm-item">
+            <div class="confirm-label">返却期限</div>
+            <div class="confirm-value limit-date" id="limitdate">2026/09/04</div>
         </div>
 
-        <div class="confirm-container">
-            <h2>以下の蔵書を借りますか？</h2>
-
-            <div class="confirm-item">
-                <div class="confirm-label">蔵書番号</div>
-                <div class="confirm-value" id="book-number">0000001</div>
-            </div>
-            <div class="confirm-item">
-                <div class="confirm-label">タイトル</div>
-                <div class="confirm-value" id="book-title"><strong>基本情報技術者試験対策</strong></div>
-            </div>
-            <div class="confirm-item">
-                <div class="confirm-label">ジャンル</div>
-                <div class="confirm-value" id="book-category">資格</div>
-            </div>
-            <div class="confirm-item">
-                <div class="confirm-label">返却期限</div>
-                <div class="confirm-value limit-date" id="limitdate">2026/09/04</div>
-            </div>
-
-            <div class="btn-group">
-                <button class="btn-back" onclick="goBack()">戻る</button>
-                <button class="btn-confirm" onclick="executeBorrow()">確定する</button>
-            </div>
+        <div class="btn-group">
+            <button class="btn-back" onclick="goBack()">戻る</button>
+            <button class="btn-confirm" onclick="executeBorrow()">確定する</button>
         </div>
+    </div>
 
-        <script>
+    <script>
+        // 「戻る」ボタン：前の一覧画面へ戻る
+        function goBack() {
+            window.location.href = 'index.html';
+        }
 
-            // 「戻る」ボタン：前の一覧画面へ戻る
-            function goBack() {
-                // 一覧画面（index.html）へ戻る処理
-                window.location.href = 'index.html';
-            }
-
-            // 「確定」ボタン：バックエンドに貸出確定を通知する
-            async function executeBorrow() {
-                // 確定画面へ遷移
-                window.location.href = 'confirm.html';
-            }
-
-        </script>
-
-    </body>
-
+        // 「確定」ボタン：バックエンドに貸出確定を通知する
+        async function executeBorrow() {
+            window.location.href = 'confirm.html';
+        }
+    </script>
+</body>
 </html>
