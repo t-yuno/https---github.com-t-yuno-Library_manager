@@ -340,7 +340,7 @@
                     <td><span class="status-badge available">貸出可能</span></td>
                     <td>-</td>
                     <td>-</td>
-                    <td><button class="btn-borrow" onclick="borrowBook()">貸出</button></td>
+                    <td><button class="btn-borrow" onclick="moveToBorrowBook()">貸出</button></td>
                 </tr>
                 <tr>
                     <td>2</td>
@@ -391,7 +391,7 @@
             window.location.href = 'return.html';
         }
         function moveToBorrowBook() {
-            window.location.href = 'borrow.html';
+            window.location.href = 'borrow_request.html';
         }
         function searchReset() {
             document.getElementById('book-title').value = '';
