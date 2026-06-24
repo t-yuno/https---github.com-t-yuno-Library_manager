@@ -9,6 +9,7 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            /* 背景色を他の画面と同じ爽やかな青色（#3da8e3）に指定 */
             background-color: #3da8e3;
         }
 
@@ -27,11 +28,11 @@
             /* 背景が青なので、ヘッダーの文字色は白にする */
             color: #ffffff; 
             margin: 0; 
-            font-size: 32px;
+            font-size: 32px; /* index.htmlの標準サイズに統一 */
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2); /* 視認性を上げるため薄い影をつける */
         }
 
-        /* 入力用コンテナのスタイル */
+        /* 完了画面専用の中央配置コンテナ */
         .confirm-container {
             max-width: 600px;
             margin: 40px auto;
@@ -53,32 +54,26 @@
             font-size: 20px;
         }
 
-        /* 確認・入力項目のレイアウト */
+        /* 確認項目のレイアウト */
         .confirm-item {
             display: flex;
-            flex-direction: column; /* スマホやPCで入力しきれるよう縦並びベースに変更 */
-            gap: 8px;
             padding: 15px 0;
             border-bottom: 1px solid #eee;
             font-size: 16px;
         }
 
         .confirm-label {
+            width: 140px;
             font-weight: bold;
             color: #555555;
         }
 
-        /* 入力フォームのスタイル */
-        input[type="text"] { 
-            width: 100%; 
-            padding: 10px; 
-            box-sizing: border-box; 
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
+        .confirm-value {
+            flex: 1;
+            color: #111111;
         }
-        
-        /* ボタンエリア */
+
+        /* ボタンエリア：配置スタイル */
         .btn-group {
             display: flex;
             gap: 20px;
@@ -99,11 +94,8 @@
         }
         button:hover { opacity: 0.9; }
 
-        /* 確定ボタン */
+        /* ホーム画面へ戻るボタン：確定ボタンと同じポジティブな緑色に変更 */
         .btn-confirm { background-color: #16a34a; }
-        
-        /* 戻るボタン */
-        .btn-back { background-color: #6b7280; }
 
         /* スマートフォン向けのレスポンシブスタイル */
         @media (max-width: 768px) {
@@ -120,9 +112,13 @@
                 font-size: 24px; /* スマホの時だけ、画面からはみ出さないように縮小する */
             }
 
-            .btn-group {
-                flex-direction: column; /* スマホではボタンを縦並びにして押しやすくする */
-                gap: 10px;
+            .confirm-item {
+                flex-direction: column; /* スマホでは項目名と値を縦並びにして見やすくする */
+                gap: 4px;
+            }
+
+            .confirm-label {
+                width: 100%;
             }
         }
     </style>
@@ -135,36 +131,30 @@
     </div>
 
     <div class="confirm-container">
-        <h2>貸出図書 新規登録</h2>
+        <h2>貸出図書の追加が完了しました</h2>
 
         <div class="confirm-item">
             <div class="confirm-label">管理番号</div>
-            <input type="text" id="serial-number" placeholder="0000000">
+            <div class="confirm-value" id="serial-number">00000001</div>
         </div>
         <div class="confirm-item">
             <div class="confirm-label">書名</div>
-            <input type="text" id="book-name" placeholder="○○入門">
+            <div class="confirm-value" id="book-name">○○入門</div>
         </div>
         <div class="confirm-item">
             <div class="confirm-label">ジャンル</div>
-            <input type="text" id="genre" placeholder="資格">
+            <div class="confirm-value" id="genre">資格</div>
         </div>
 
         <div class="btn-group">
-            <button class="btn-back" onclick="goBack()">戻る</button>
-            <button class="btn-confirm" onclick="registerBook()">確定する</button>
+            <button class="btn-confirm" onclick="goBack()">ホーム画面へ</button>
         </div>
     </div>
 
     <script>
-        // 「戻る」ボタン：前の一覧画面へ戻る
+        // 「ホーム画面へ」ボタン：メインの一覧画面へ戻る
         function goBack() {
             window.location.href = 'index.html';
-        }
-
-        // 「確定」ボタン：貸出図書の新規追加を確定する
-        async function registerBook() {
-            window.location.href = 'registerbook_confirm.html';
         }
     </script>
 </body>
