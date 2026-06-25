@@ -9,7 +9,7 @@
         body { 
             font-family: Arial, sans-serif;
             margin: 20px;
-            background-color: #3da8e3;
+            background-color: #64b9e6;
         }
 
         /* 中身の高さに関わらず、ボックス全体の高さを揃える */
@@ -148,6 +148,12 @@
             color: #262626;
         }
 
+        /* 確認中ステータスのバッジスタイル（紫） */
+        .pending {
+            background-color: #f3f0ff; /* 薄い紫の背景色 */
+            color: #6f2dbd;            /* 濃い紫の文字色 */
+        }
+
         /* フォームのスタイル */
         .flex-container {
             display: flex;
@@ -158,7 +164,7 @@
         h2 {
             margin-top: 0;
             color: #333333;
-            border-bottom: 2px solid #3da8e3; /* ボックス内の見出しの下線は青のまま */
+            border-bottom: 2px solid #64b9e6; /* ボックス内の見出しの下線は青のまま */
             padding-bottom: 8px;
             font-size: 20px;
         }
@@ -251,50 +257,18 @@
 </head>
 <body onload="checkUserRole()">
 
-    <div class="demo-selector">
-        <label for="test-user">【モック用】Googleサイトから遷移してきたユーザーの切り替え</label>
-        <select id="test-user" onchange="checkUserRole()">
-            <option value="user">一般社員：山田 太郎 さん（yamada@yourcompany.com）</option>
-            <option value="admin">管理者：図書 管理委員 さん（admin-books@yourcompany.com）</option>
-        </select>
-    </div>
-
     <div class="header-container">
         <h1>📚 貸出図書管理システム</h1>
 
         <div class="user-info">
-            ログイン中: <span id="display-name">ゲスト</span>
-            <span id="admin-badge" class="admin-badge">管理者</span>
-        </div>
-    </div>
-
-    <div id="admin-menu" class="admin-menu-container">
-        <h3>🔧 管理者専用メニュー</h3>
-        
-        <div class="flex-container">
-            
-            <div class="form-box">
-                <h2>💿 貸出図書新規登録</h2>
-                <button class="btn-admin-action" onclick="moveToRegisterBook()">登録画面</button>
-            </div>
-
-            <div class="form-box">
-                <h2>⤴ 貸出確定</h2>
-                <button class="btn-admin-action" onclick="moveToBorrowBook()">貸出画面</button>
-            </div>
-
-            <div class="form-box">
-                <h2>⤵ 返却受付</h2>
-                <button class="btn-admin-action" onclick="moveToReturnBook()">返却画面</button>
-            </div>
-
+            ログイン中: <span id="display-name">図書 管理委員 (ID: 9999999)</span>
         </div>
     </div>
 
     <div class="flex-container">
 
-        <div class="form-box">
-            <h2>🔎 貸出図書の検索</h2>
+        <!-- <div class="form-box">
+            <h2>🔎 貸出依頼図書の検索</h2>
             
             <div class="form-group">
                 <label for="book-title">タイトル検索（部分一致）</label>
@@ -308,14 +282,14 @@
 
             <button class="btn-search" onclick="searchBook()">検索</button>
             <button class="btn-reset" onclick="searchReset()">検索リセット</button>
-        </div>
+        </div> -->
 
         <div class="spacer-box" style="flex: 1;"></div>
 
     </div>
 
 
-    <h2 class="list-title">貸出図書一覧</h2>
+    <h2 class="list-title">貸出依頼図書一覧</h2>
         
     <div class="table-container">
         <table>
@@ -326,8 +300,7 @@
                     <th>書名</th>
                     <th>ジャンル</th>
                     <th>ステータス</th>
-                    <th>貸出日</th>
-                    <th>返却期限</th>
+                    <th>貸出希望者</th>
                     <th>貸出ボタン</th>
                 </tr>
             </thead>
@@ -337,62 +310,16 @@
                     <td>0000001</td>
                     <td>基本情報技術者試験対策</td>
                     <td>資格</td>
-                    <td><span class="status-badge available">貸出可能</span></td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td><button class="btn-borrow" onclick="moveToBorrowBook()">貸出</button></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>0000002</td>
-                    <td>モダンWeb開発入門</td>
-                    <td>フロントエンド</td>
-                    <td><span class="status-badge borrowed">貸出中</span></td>
-                    <td>2026/06/04</td>
-                    <td>2026/09/04</td>
-                    <td><button disabled style="background-color: #8a8c8e; cursor: not-allowed;">貸出</button></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>0000003</td>
-                    <td>AWS認定資格試験テキスト</td>
-                    <td>資格</td>
-                    <td><span class="status-badge not-for-loan">社内閲覧</span></td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td><button disabled style="background-color: #8a8c8e; cursor: not-allowed;">貸出</button></td>
+                    <td><span class="status-badge pending">確認中</span></td>
+                    <td>山田 太郎</td>
+                    <td><button class="btn-borrow" onclick="moveToBorrowBook()">貸出確定画面へ</button></td>
                 </tr>
             </tbody>
         </table>
     </div>
         
     <script>
-        function checkUserRole() {
-            const selectedRole = document.getElementById('test-user').value;
-            const displayNameEl = document.getElementById('display-name');
-            const adminBadgeEl = document.getElementById('admin-badge');
-            const adminMenuEl = document.getElementById('admin-menu');
 
-            if (selectedRole === 'admin') {
-                displayNameEl.innerText = "図書 管理委員 (ID: 9999999)";
-                adminBadgeEl.style.display = "inline-block";
-                adminMenuEl.style.display = "block";
-            } else {
-                displayNameEl.innerText = "山田 太郎 (ID: 0000001)";
-                adminBadgeEl.style.display = "none";
-                adminMenuEl.style.display = "none";
-            }
-        }
-
-        function moveToRegisterBook() {
-            window.location.href = 'registerbook.html';
-        }
-        function moveToReturnBook() {
-            window.location.href = 'return.html';
-        }
-        function moveToBorrowBook() {
-            window.location.href = 'borrow_request.html';
-        }
         function searchReset() {
             document.getElementById('book-title').value = '';
             document.getElementById('book-category').value = '';
