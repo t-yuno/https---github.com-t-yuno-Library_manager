@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>貸出図書管理アプリ</title>
+    <style>
+        /* 全体の基本スタイル */
+        body { 
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #64b9e6;
+        }
+
+        /* 中身の高さに関わらず、ボックス全体の高さを揃える */
+        .form-box {
+            flex: 1; 
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ヘッダーのレイアウト */
+        .header-container {
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;            
+            border-bottom: 3px solid #ffffff;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        h1 { 
+            color: #ffffff; 
+            margin: 0; 
+            font-size: 32px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        /* ユーザー情報のテキストスタイル */
+        .user-info {
+            font-size: 14px;
+            color: #333333;
+            font-weight: bold;
+            background: #ffffff;
+            padding: 8px 16px;
+            border-radius: 20px;       
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+            
+        /* 管理者用バッジのスタイル */
+        .admin-badge { 
+            background-color: #ef4444;
+            color: #ffffff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 8px;
+            display: none;
+        }
+        
+        /* 管理者専用メニューエリア全体の囲み */
+        .admin-menu-container {
+            background-color: #f8fafc;
+            border: 2px solid #e2e8f0;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .admin-menu-container h3 {
+            margin-top: 0;
+            color: #1e3a8a;
+        }
+
+        /* デモ用の簡易アカウント切り替えボックス */
+        .demo-selector { 
+            background: #fffbeb;
+            border: 1px dashed #d97706;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .demo-selector label { 
+            font-weight: bold;
+            color: #b45309;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .demo-selector select { 
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        /* テーブルコンテナ：テーブルが画面幅を超えた場合に横スクロールさせる */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-bottom: 30px;
+        }
+
+        /* テーブルのスタイル */
+        table { 
+            width: 100%;
+            min-width: 800px;
+            border-collapse: collapse;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+            
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #1e3a8a;
+            color: #ffffff;
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .available {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .borrowed {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .not-for-loan {
+            background-color: #fff352;
+            color: #262626;
+        }
+
+        /* フォームのスタイル */
+        .flex-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #333333;
+            border-bottom: 2px solid #64b9e6; /* ボックス内の見出しの下線は青のまま */
+            padding-bottom: 8px;
+            font-size: 20px;
+        }
+
+        .form-group { margin-bottom: 15px; }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555555;
+        }
+        
+        input[type="text"] { width: 100%; padding: 8px; box-sizing: border-box; }
+
+        /* ボタンの共通スタイル */
+        button { 
+            padding: 10px 20px; 
+            color: #ffffff; 
+            border: none; 
+            cursor: pointer; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            width: 100%; 
+            height: 40px;     
+        }
+
+        .btn-search {
+            background-color: #16a34a;
+            margin-top: auto;
+        }
+
+        .btn-reset { 
+            margin-top: 15px;
+            background-color: #6b7280; 
+        }
+
+        .btn-admin-action {
+            background-color: #b91c1c;
+            margin-top: auto;
+        }
+
+        .btn-borrow {
+            background-color: #2563eb;
+        }
+
+        /* ==========================================================================
+           一覧の見出しスタイル
+           ========================================================================== */
+        .list-title {
+            color: #ffffff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            /* 青背景と同化しないよう、下線の色を白（#ffffff）で上書きする */
+            border-bottom: 2px solid #ffffff !important; 
+            padding-bottom: 8px;
+            margin-top: 40px;
+            font-size: 24px; /* 標準サイズと同じ大きさ（24px）に明示的に設定 */
+        }
+
+        /* スマートフォン向けのレスポンシブスタイル */
+        @media (max-width: 768px) {
+            body {
+                margin: 15px;
+            }
+
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .flex-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .spacer-box {
+                display: none;
+            }
+            
+            h1 {
+                font-size: 24px; /* スマホの時だけ、画面からはみ出さないように程よく縮小する */
+            }
+
+            .list-title {
+                font-size: 20px; /* スマホの時だけ、バランスを見て少し縮小する */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-container">
+        <h1>📚 貸出図書管理システム</h1>
+
+        <div class="user-info">
+            ログイン中: <span id="display-name">図書 管理委員 (ID: 9999999)</span>
+        </div>
+    </div>
+
+    <div class="flex-container">
+
+        <div class="form-box">
+            <h2>🔎 変更する貸出図書の検索</h2>
+            
+            <div class="form-group">
+                <label for="book-title">タイトル検索（部分一致）</label>
+                <input type="text" id="book-title" placeholder="例：リーダブルコード">
+            </div>
+
+            <div class="form-group">
+                <label for="book-category">カテゴリ検索</label>
+                <input type="text" id="book-category" placeholder="例：資格">
+            </div>
+
+            <button class="btn-search" onclick="searchBook()">検索</button>
+            <button class="btn-reset" onclick="searchReset()">検索リセット</button>
+        </div>
+
+        <div class="spacer-box" style="flex: 1;"></div>
+
+    </div>
+
+
+    <h2 class="list-title">貸出図書一覧</h2>
+        
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>管理番号</th>
+                    <th>書名</th>
+                    <th>ジャンル</th>
+                    <th>ステータス</th>
+                    <th>変更ボタン</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>0000001</td>
+                    <td>基本情報技術者試験対策</td>
+                    <td>資格</td>
+                    <td><span class="status-badge available">貸出可能</span></td>
+                    <td><button class="btn-borrow" onclick="moveToBorrowBook()">変更</button></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>0000002</td>
+                    <td>モダンWeb開発入門</td>
+                    <td>フロントエンド</td>
+                    <td><span class="status-badge borrowed">貸出中</span></td>
+                    <td><button class="btn-borrow" onclick="moveToBorrowBook()">変更</button></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>0000003</td>
+                    <td>AWS認定資格試験テキスト</td>
+                    <td>資格</td>
+                    <td><span class="status-badge not-for-loan">社内閲覧</span></td>
+                    <td><button class="btn-borrow" onclick="moveToBorrowBook()">変更</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+        
+    <script>
+
+        function moveToBorrowBook() {
+            window.location.href = 'statuschange.html';
+        }
+
+    </script>
+</body>
+</html>
