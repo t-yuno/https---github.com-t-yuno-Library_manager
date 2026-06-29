@@ -50,54 +50,8 @@
             border-radius: 20px;       
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-            
-        /* 管理者用バッジのスタイル */
-        .admin-badge { 
-            background-color: #ef4444;
-            color: #ffffff;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            margin-left: 8px;
-            display: none;
-        }
-        
-        /* 管理者専用メニューエリア全体の囲み */
-        .admin-menu-container {
-            background-color: #f8fafc;
-            border: 2px solid #e2e8f0;
-            padding: 20px;
-            margin-bottom: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .admin-menu-container h3 {
-            margin-top: 0;
-            color: #1e3a8a;
-        }
 
-        /* デモ用の簡易アカウント切り替えボックス */
-        .demo-selector { 
-            background: #fffbeb;
-            border: 1px dashed #d97706;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-        }
-        .demo-selector label { 
-            font-weight: bold;
-            color: #b45309;
-            display: block;
-            margin-bottom: 5px;
-        }
-        .demo-selector select { 
-            width: 100%;
-            padding: 8px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-        }
-
-        /* テーブルコンテナ：テーブルが画面幅を超えた場合に横スクロールさせる */
+        /* テーブルコンテナ：横スクロール用 */
         .table-container {
             width: 100%;
             overflow-x: auto;
@@ -158,7 +112,7 @@
         h2 {
             margin-top: 0;
             color: #333333;
-            border-bottom: 2px solid #64b9e6; /* ボックス内の見出しの下線は青のまま */
+            border-bottom: 2px solid #64b9e6;
             padding-bottom: 8px;
             font-size: 20px;
         }
@@ -196,56 +150,32 @@
             background-color: #6b7280; 
         }
 
+        /* 管理者用の赤色ボタン */
         .btn-admin-action {
             background-color: #b91c1c;
-            margin-top: auto;
         }
-
+        
         .btn-borrow {
             background-color: #2563eb;
         }
 
-        /* ==========================================================================
-           一覧の見出しスタイル
-           ========================================================================== */
         .list-title {
             color: #ffffff;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-            /* 青背景と同化しないよう、下線の色を白（#ffffff）で上書きする */
             border-bottom: 2px solid #ffffff !important; 
             padding-bottom: 8px;
             margin-top: 40px;
-            font-size: 24px; /* 標準サイズと同じ大きさ（24px）に明示的に設定 */
+            font-size: 24px;
         }
 
         /* スマートフォン向けのレスポンシブスタイル */
         @media (max-width: 768px) {
-            body {
-                margin: 15px;
-            }
-
-            .header-container {
-                flex-direction: column;
-                gap: 15px;
-                align-items: flex-start;
-            }
-
-            .flex-container {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .spacer-box {
-                display: none;
-            }
-            
-            h1 {
-                font-size: 24px; /* スマホの時だけ、画面からはみ出さないように程よく縮小する */
-            }
-
-            .list-title {
-                font-size: 20px; /* スマホの時だけ、バランスを見て少し縮小する */
-            }
+            body { margin: 15px; }
+            .header-container { flex-direction: column; gap: 15px; align-items: flex-start; }
+            .flex-container { flex-direction: column; gap: 15px; }
+            .spacer-box { display: none; }
+            h1 { font-size: 24px; }
+            .list-title { font-size: 20px; }
         }
     </style>
 </head>
@@ -304,7 +234,7 @@
                     <td>基本情報技術者試験対策</td>
                     <td>資格</td>
                     <td><span class="status-badge available">貸出可能</span></td>
-                    <td><button class="btn-borrow" onclick="moveToBorrowBook()">変更</button></td>
+                    <td><button class="btn-borrow" onclick="moveToStatusChange()">変更</button></td>
                 </tr>
                 <tr>
                     <td>2</td>
@@ -312,7 +242,7 @@
                     <td>モダンWeb開発入門</td>
                     <td>フロントエンド</td>
                     <td><span class="status-badge borrowed">貸出中</span></td>
-                    <td><button class="btn-borrow" onclick="moveToBorrowBook()">変更</button></td>
+                    <td><button class="btn-borrow" onclick="moveToStatusChange()">変更</button></td>
                 </tr>
                 <tr>
                     <td>3</td>
@@ -320,7 +250,7 @@
                     <td>AWS認定資格試験テキスト</td>
                     <td>資格</td>
                     <td><span class="status-badge not-for-loan">社内閲覧</span></td>
-                    <td><button class="btn-borrow" onclick="moveToBorrowBook()">変更</button></td>
+                    <td><button class="btn-borrow" onclick="moveToStatusChange()">変更</button></td>
                 </tr>
             </tbody>
         </table>
@@ -328,8 +258,13 @@
         
     <script>
 
-        function moveToBorrowBook() {
+        function moveToStatusChange() {
             window.location.href = 'statuschange.html';
+        }
+
+        function searchReset() {
+            document.getElementById('book-title').value = '';
+            document.getElementById('book-category').value = '';
         }
 
     </script>
