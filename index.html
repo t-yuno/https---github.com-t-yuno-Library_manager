@@ -280,7 +280,7 @@
 
             <div class="form-box">
                 <h2>⤴ 貸出確定</h2>
-                <button class="btn-admin-action" onclick="moveToBorrowBook()">貸出画面</button>
+                <button class="btn-admin-action" onclick="moveToBorrowConfirm()">貸出画面</button>
             </div>
 
             <div class="form-box">
@@ -390,8 +390,11 @@
         function moveToReturnBook() {
             window.location.href = 'return.html';
         }
-        function moveToBorrowBook() {
+        function moveToBorrowConfirm() {
             window.location.href = 'requestlist_menu.html';
+        }
+        function moveToBorrowBook() {
+            window.location.href = 'borrow_request.html';
         }
         function searchReset() {
             document.getElementById('book-title').value = '';
