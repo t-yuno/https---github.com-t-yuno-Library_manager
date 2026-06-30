@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蔵書貸出管理アプリ</title>
+    <style>
+        /* 全体の基本スタイル */
+        body { 
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #64b9e6;
+        }
+
+        /* 中央に配置するためのコンテナ */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* 確定画面のボックススタイル（他画面のform-boxと統一） */
+        .form-box {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* ヘッダーのレイアウト */
+        .header-container {
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;            
+            border-bottom: 3px solid #ffffff;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        h1 { 
+            color: #ffffff; 
+            margin: 0; 
+            font-size: 32px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        /* ユーザー情報のテキストスタイル */
+        .user-info {
+            font-size: 14px;
+            color: #333333;
+            font-weight: bold;
+            background: #ffffff;
+            padding: 8px 16px;
+            border-radius: 20px;       
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #333333;
+            border-bottom: 2px solid #64b9e6;
+            padding-bottom: 8px;
+            font-size: 22px;
+            margin-bottom: 25px;
+        }
+
+        /* 確認項目のレイアウト */
+        .confirm-item {
+            display: flex;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 16px;
+        }
+
+        .confirm-label {
+            width: 140px;
+            font-weight: bold;
+            color: #555555;
+        }
+
+        .confirm-value {
+            flex: 1;
+            color: #111111;
+        }
+
+        /* ボタングループ */
+        .btn-group {
+            margin-top: 35px;
+        }
+        
+        /* ボタンの共通スタイル */
+        button { 
+            padding: 10px 20px; 
+            color: #ffffff; 
+            border: none; 
+            cursor: pointer; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            width: 100%; 
+            height: 45px;
+            font-size: 16px;
+        }
+
+        /* カーソルを合わせるとハイライトが付くやつ */ 
+        button:hover { 
+            opacity: 0.9; 
+        }
+
+        /* ホームへ戻る用のボタンスタイル（管理メニューに戻る等と同じグレー） */
+        .btn-home { 
+            background-color: #6b7280; 
+        }
+
+        /* スマートフォン向けのレスポンシブスタイル */
+        @media (max-width: 768px) {
+            body { margin: 15px; }
+            .header-container { flex-direction: column; gap: 15px; align-items: flex-start; }
+            h1 { font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-container">
+        <h1>📚 貸出図書管理システム</h1>
+        <div class="user-info">
+            ログイン中: <span id="display-name">図書 管理委員 (ID: 9999999)</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="form-box">
+            <h2>💿 操作が確定しました！</h2>
+
+            <div class="confirm-item">
+                <div class="confirm-value" id="explanation">あなたの操作は正常に完了しました</div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn-home" onclick="goHome()">ホームへ</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 「ホームへ」ボタン：ホーム画面（index.html）へ移動
+        function goHome() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
