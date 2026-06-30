@@ -55,7 +55,7 @@
         .flex-container {
             display: flex;
             gap: 20px;
-            margin-bottom: 40px;
+            margin-bottom: 20px; /* 下の戻るボックスとの間隔 */
         }
 
         h2 {
@@ -91,6 +91,11 @@
         .btn-admin-action {
             background-color: #b91c1c;
             margin-top: auto;
+        }
+
+        /* 戻るボタン用のグレースタイル */
+        .btn-back {
+            background-color: #6b7280;
         }
 
         /* スマートフォン向けのレスポンシブスタイル */
@@ -130,13 +135,23 @@
         </div>
 
     </div>
+
+    <div class="form-box">
+        <button class="btn-back" onclick="moveToIndex()">メインメニューに戻る</button>
+    </div>
         
     <script>
         function moveToRegisterBooks() {
             window.location.href = 'registerbook.html';
         }
+        
         function moveToStatusChange() {
             window.location.href = 'statuschange_menu.html';
+        }
+
+        // 一番最初の画面（index.html）に戻る関数
+        function moveToIndex() {
+            window.location.href = 'index.html';
         }
     </script>
 </body>
